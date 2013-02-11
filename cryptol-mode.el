@@ -1,5 +1,14 @@
+;;; cryptol-mode.el --- Cryptol major mode
+
 ;; Copyright (c) 2013 Austin Seipp. All rights reserved.
-;; 
+
+;; Author:    Austin Seipp <aseipp [@at] pobox [dot] com>
+;; URL:       http://github.com/thoughtpolice/cryptol-mode
+;; Keywords:  Cryptol major mode
+;; Version:   0.0.0.0
+
+;; This file is not part of GNU Emacs.
+
 ;; Permission is hereby granted, free of charge, to any person obtaining
 ;; a copy of this software and associated documentation files (the
 ;; "Software"), to deal in the Software without restriction, including
@@ -20,11 +29,6 @@
 ;; WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ;; 
 ;; [ MIT license: http://www.opensource.org/licenses/MIT ]
-
-;; Version:   0.0.0.0-DEV
-;; Keywords:  Cryptol Emacs Major-mode
-;; Author:    Austin Seipp <aseipp [@at] pobox [dot] com>
-;; URL:       http://github.com/thoughtpolice/cryptol-mode
 
 ;; TODO:
 ;;  - Everything
@@ -158,3 +162,5 @@
 (add-to-list 'auto-mode-alist '("\\.cry$"  . cryptol-mode))
 (add-to-list 'auto-mode-alist '("\\.lcry$" . cryptol-mode))
 (add-to-list 'auto-mode-alist '("\\.scr$"  . cryptol-mode))
+
+;;; cryptol-mode.el ends here
