@@ -107,6 +107,16 @@
 	    (append (list cryptol-command) cryptol-args-repl))))
   (pop-to-buffer "*CryptolREPL*"))
 
+;;; -- Syntax table ------------------------------------------------------------
+
+(defvar cryptol-mode-syntax-table
+  (let ((st (make-syntax-table)))
+    (modify-syntax-entry ?/ ". 124b" st)
+    (modify-syntax-entry ?* ". 23" st)
+    (modify-syntax-entry ?\n "> b" st)
+    st)
+  "Syntax table for `cryptol-mode'.")
+
 ;;; -- Language Syntax ---------------------------------------------------------
 
 (defvar cryptol-string-regexp "\"\\.\\*\\?")
@@ -125,11 +135,12 @@
 
 ;;; -- Mode entry --------------------------------------------------------------
 
-(define-derived-mode cryptol-mode fundamental-mode "Cryptol"
+(define-derived-mode cryptol-mode prog-mode "Cryptol"
   "Major mode for editing Cryptol files"
   
   ;; Syntax highlighting
   (setq font-lock-defaults '((cryptol-font-lock-defaults)))
+
   ;; Indentation, no tabs
   (set (make-local-variable 'tab-width) cryptol-tab-width)
   (setq indent-tabs-mode nil))
