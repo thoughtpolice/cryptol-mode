@@ -47,7 +47,6 @@
 
 ;; * Compilation mode
 ;;  - Detect compiler features?
-;; * Better highlighting for operators
 ;; * Better REPL integration
 ;;  - Run 'genTests' or 'check' or 'exhaust' on given function/theorem
 ;;  - Automatically run batch-mode files
