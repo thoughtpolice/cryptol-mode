@@ -47,7 +47,9 @@
 
 ;; * Indentation mode.
 ;;  - Maybe something like Haskell-mode?
-;; * imenu support
+;; * Better imenu support
+;;  - Should support function definitions
+;;  - Modules? Parameterized modules?
 ;; * Better highlighting.
 ;;  - We really want to identify function names.
 ;; * Compilation mode.
@@ -107,6 +109,28 @@
     map)
   "Keymap for `cryptol-mode'.")
 
+;;; -- Language Syntax ---------------------------------------------------------
+
+(defvar cryptol-string-regexp "\"\\.\\*\\?")
+
+(defvar cryptol-symbols-regexp
+  (regexp-opt '( "[" "]" "," "{" "}" "@" "#")))
+
+(defvar cryptol-symbols2-regexp
+  (regexp-opt '( "|" "=>" "->" ":")))
+
+(defvar cryptol-consts-regexp
+  (regexp-opt '( "True" "False")))
+
+(defvar cryptol-type-regexp
+  (regexp-opt '( "Bit" "inf")))
+
+(defvar cryptol-keywords-regexp
+  (regexp-opt '("module" "theorem" "where" "let" "if" "else" "then") 'words))
+
+(defvar cryptol-theorem-regexp
+  "^theorem \\(.*\\):")
+
 ;;; -- Menu --------------------------------------------------------------------
 
 (defun cryptol-version ()
@@ -143,7 +167,28 @@
 	       (make-repl-command (buffer-file-name)))))
     (pop-to-buffer "*CryptolREPL*")))
 
-;;; -- Syntax table ------------------------------------------------------------
+;;; -- imenu -------------------------------------------------------------------
+
+(defun cryptol-imenu-create-index ()
+  "Creates an imenu index of all the methods/theorems in the buffer."
+  (interactive)
+
+  (goto-char (point-min))
+  (let ((imenu-list '()) assign pos)
+    (while (re-search-forward
+	    (concat "\\("
+		    cryptol-theorem-regexp
+		    "\\)")
+	    (point-max)
+	    t)
+      ;; Look for any theorems and add them to the list
+      (when (match-string 2)
+	(setq pos (match-beginning 2))
+	(setq assign (match-string 2))
+	(push (cons assign pos) imenu-list)))
+    imenu-list))
+
+;;; -- Syntax table and highlighting -------------------------------------------
 
 (defvar cryptol-mode-syntax-table
   (let ((st (make-syntax-table)))
@@ -152,25 +197,6 @@
     (modify-syntax-entry ?\n "> b" st)
     st)
   "Syntax table for `cryptol-mode'.")
-
-;;; -- Language Syntax ---------------------------------------------------------
-
-(defvar cryptol-string-regexp "\"\\.\\*\\?")
-
-(defvar cryptol-symbols-regexp
-  (regexp-opt '( "[" "]" "," "{" "}" "@" "#")))
-
-(defvar cryptol-symbols2-regexp
-  (regexp-opt '( "|" "=>" "->" ":")))
-
-(defvar cryptol-consts-regexp
-  (regexp-opt '( "True" "False")))
-
-(defvar cryptol-type-regexp
-  (regexp-opt '( "Bit" "inf")))
-
-(defvar cryptol-keywords-regexp
-  (regexp-opt '("module" "theorem" "where" "let" "if" "else" "then") 'words))
 
 (defvar cryptol-font-lock-defaults
   `((,cryptol-string-regexp   . font-lock-string-face)
@@ -193,7 +219,11 @@
 
   ;; Indentation, no tabs
   (set (make-local-variable 'tab-width) cryptol-tab-width)
-  (setq indent-tabs-mode nil))
+  (setq indent-tabs-mode nil)
+
+  ;; imenu
+  (make-local-variable 'imenu-create-index-function)
+  (setq imenu-create-index-function 'cryptol-imenu-create-index))
 (provide 'cryptol-mode)
 
 ;; Major mode used for .scr files (batch files)
