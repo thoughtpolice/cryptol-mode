@@ -117,7 +117,7 @@
 		       ", using " cryptol-ver-out))))
 
 (easy-menu-define cryptol-mode-menu cryptol-mode-map
-  "Menu for Cryptol mode"
+  "Menu for `cryptol-mode'."
   '("Cryptol"
     ["Start REPL" cryptol-repl]
     "---"
