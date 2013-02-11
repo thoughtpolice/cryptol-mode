@@ -83,7 +83,9 @@
 (defun cryptol-version ()
   "Show the `cryptol-mode' version in the echo area."
   (interactive)
-  (message (concat "cryptol-mode version " cryptol-mode-version)))
+  (let ((cryptol-ver-out (car (process-lines cryptol-command "-v"))))
+      (message (concat "cryptol-mode version " cryptol-mode-version
+		       ", using " cryptol-ver-out))))
 
 (easy-menu-define cryptol-mode-menu cryptol-mode-map
   "Menu for Cryptol mode"
