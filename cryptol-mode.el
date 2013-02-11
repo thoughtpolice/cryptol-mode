@@ -52,7 +52,7 @@
   :type  'string
   :group 'cryptol)
 
-(defcustom cryptol-args-repl '("")
+(defcustom cryptol-args-repl nil
   "The arguments to pass to `cryptol-command' to start a REPL."
   :type  'list
   :group 'cryptol)
@@ -95,15 +95,20 @@
 
 ;;; -- Commands ----------------------------------------------------------------
 
+(defun make-repl-command (file)
+  (append (list cryptol-command) cryptol-args-repl (list file)))
+
 (defun cryptol-repl ()
   "Launch a Cryptol REPL using `cryptol-command' as an inferior executable."
   (interactive)
-  (unless (comint-check-proc "*CryptolREPL*")
-    (set-buffer
-     (apply 'make-comint "CryptolREPL"
-	    "env" nil
-	    (append (list cryptol-command) cryptol-args-repl))))
-  (pop-to-buffer "*CryptolREPL*"))
+  (if (eq nil (buffer-file-name))
+      (message "Please save the current buffer before using the REPL.")
+    (unless (comint-check-proc "*CryptolREPL*")
+       (set-buffer
+	(apply 'make-comint "CryptolREPL"
+	       "env" nil
+	       (make-repl-command (buffer-file-name)))))
+    (pop-to-buffer "*CryptolREPL*")))
 
 ;;; -- Syntax table ------------------------------------------------------------
 
