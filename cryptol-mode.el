@@ -29,6 +29,10 @@
 ;; TODO:
 ;;  - Everything
 
+(require 'comint)
+(require 'easymenu)
+(require 'font-lock)
+
 ;;; -- Customization variables -------------------------------------------------
 
 (defconst cryptol-mode-version "0.0.0.0-DEV"
@@ -71,11 +75,22 @@
   :group 'cryptol)
 
 (defvar cryptol-mode-map
-  nil
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "C-c C-l") 'cryptol-repl)
+    map)
   "Keymap for `cryptol-mode'.")
 
 ;;; -- Commands ----------------------------------------------------------------
 
+(defun cryptol-repl ()
+  "Launch a Cryptol REPL using `cryptol-command' as an inferior executable."
+  (interactive)
+  (unless (comint-check-proc "*CryptolREPL*")
+    (set-buffer
+     (apply 'make-comint "CryptolREPL"
+	    "env" nil
+	    (append (list cryptol-command) cryptol-args-repl))))
+  (pop-to-buffer "*CryptolREPL*"))
 
 ;;; -- Language Syntax ---------------------------------------------------------
 
