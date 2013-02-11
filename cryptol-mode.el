@@ -80,6 +80,21 @@
     map)
   "Keymap for `cryptol-mode'.")
 
+;;; -- Menu --------------------------------------------------------------------
+
+(defun cryptol-version ()
+  "Show the `cryptol-mode' version in the echo area."
+  (interactive)
+  (message (concat "cryptol-mode version " cryptol-mode-version)))
+
+(easy-menu-define cryptol-mode-menu cryptol-mode-map
+  "Menu for Cryptol mode"
+  '("Cryptol"
+    ["REPL" cryptol-repl]
+    "---"
+    ["Version" cryptol-version]
+    ))
+
 ;;; -- Commands ----------------------------------------------------------------
 
 (defun cryptol-repl ()
