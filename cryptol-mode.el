@@ -76,8 +76,8 @@
   :type  'string
   :group 'cryptol)
 
-(defcustom cryptol-args-repl nil
-  "The arguments to pass to `cryptol-command' to start a REPL."
+(defcustom cryptol-args-repl '("-n")
+  "The arguments to pass to `cryptol-command' when starting a REPL."
   :type  'list
   :group 'cryptol)
 
