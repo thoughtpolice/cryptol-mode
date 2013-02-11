@@ -19,10 +19,10 @@
 ;; distribute, sublicense, and/or sell copies of the Software, and to
 ;; permit persons to whom the Software is furnished to do so, subject to
 ;; the following conditions:
-;; 
+;;
 ;; The above copyright notice and this permission notice shall be
 ;; included in all copies or substantial portions of the Software.
-;; 
+;;
 ;; THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 ;; EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 ;; MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -30,7 +30,7 @@
 ;; LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 ;; OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 ;; WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-;; 
+;;
 ;; [ MIT license: http://www.opensource.org/licenses/MIT ]
 
 ;;; Commentary:
@@ -110,15 +110,17 @@
   "Show the `cryptol-mode' version in the echo area."
   (interactive)
   (let ((cryptol-ver-out (car (process-lines cryptol-command "-v"))))
-      (message (concat "cryptol-mode version " cryptol-mode-version
+      (message (concat "cryptol-mode v" cryptol-mode-version
 		       ", using " cryptol-ver-out))))
 
 (easy-menu-define cryptol-mode-menu cryptol-mode-map
   "Menu for Cryptol mode"
   '("Cryptol"
-    ["REPL" cryptol-repl]
+    ["Start REPL" cryptol-repl]
     "---"
-    ["Version" cryptol-version]
+    ["Customize Cryptol group" (customize-group 'cryptol)]
+    "---"
+    ["Version info" cryptol-version]
     ))
 
 ;;; -- Commands ----------------------------------------------------------------
@@ -178,7 +180,7 @@
 ;;;###autoload
 (define-derived-mode cryptol-mode prog-mode "Cryptol"
   "Major mode for editing Cryptol files"
-  
+
   ;; Syntax highlighting
   (setq font-lock-defaults '((cryptol-font-lock-defaults)))
 
@@ -200,7 +202,7 @@
     "showtr" "deltr" "autotrace"
     "compile" "fm" "isabelle"
     "translate" "equals" "sat"
-    "safe")                            
+    "safe")
   '((":" . 'font-lock-builtin)   ;; ':' is a builtin
     ("@" . 'font-lock-operator)) ;; '@' is an operator
   nil nil                        ;; autoload is set below
