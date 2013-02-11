@@ -7,27 +7,40 @@ writing cryptographic code.
 
 # Installation
 
-There are two ways to get this package: via marmalade and manual
-installation.
+There are two ways to get this package: via [marmalade][] if you're
+using `package.el`, or via manual installation.
+
+If you're using Emacs 24 or above, then installation via `package.el`
+is recommended. If you're not using Emacs 24, `package.el` is still
+recommended because it's awesome and I say so. But you can still do
+things the old fashioned way too.
+
+[Melpa](https://github.com/milkypostman/melpa.git) is not supported
+(yet?)
 
 ## Installation via Marmalade
 
-If you're using [marmalade][] (and if you're not, *why not?*) then
-installation is as easy as doing `M-x package-install cryptol-mode`.
+If you're using [marmalade][] (and if you're not, *ask yourself why!*)
+then installation is as easy as doing `M-x package-install
+cryptol-mode`.
 
-[marmalade]: http://marmalade-repo.org/
+## Manual install
 
-## Manual installation
-
-Put `cryptol-mode.el` somewhere on your `load-path` and then just add:
+Even if you don't use `package.el`, installation is pretty
+simple. Just put `cryptol-mode.el` somewhere on your `load-path` and
+then just add:
 
 ```lisp
 (require 'cryptol-mode)
 ```
 
-to your `.emacs`.
+to your `.emacs`, and you're done.
 
 # Usage
+
+Open up any `.cry` file to get dropped into `cryptol-mode`
+automatically. Cryptol batch files (`.scr` extension) are also
+supported. Literate files are not yet supported.
 
 Currently supported functionality is:
 
@@ -60,6 +73,7 @@ MIT. See
 [LICENSE.txt](https://raw.github.com/thoughtpolice/cryptol-mode/master/LICENSE.txt)
 for terms of copyright and redistribution.
 
+[marmalade]: http://marmalade-repo.org/
 [contribute]: https://github.com/thoughtpolice/cryptol-mode/blob/master/CONTRIBUTING.md
 [issue tracker]: http://github.com/thoughtpolice/cryptol-mode/issues
 [gh]: http://github.com/thoughtpolice/cryptol-mode
