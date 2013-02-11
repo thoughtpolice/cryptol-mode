@@ -155,7 +155,7 @@
 (defvar cryptol-string-regexp "\"\\.\\*\\?")
 
 (defvar cryptol-symbols-regexp
-  (regexp-opt '( "[" "]" ";" ":" "," "{" "}" "=>" "->" "@")))
+  (regexp-opt '( "[" "]" ";" ":" "," "{" "}" "=>" "->" "@" "#")))
 
 (defvar cryptol-consts-regexp
   (regexp-opt '( "True" "False")))
