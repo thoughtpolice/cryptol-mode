@@ -45,7 +45,9 @@
 
 ;;; TODO:
 
-;; * Compilation mode
+;; * Indentation mode.
+;;  - Maybe something like Haskell-mode?
+;; * Compilation mode.
 ;;  - Detect compiler features?
 ;; * Better REPL integration
 ;;  - Run 'genTests' or 'check' or 'exhaust' on given function/theorem
