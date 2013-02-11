@@ -166,6 +166,7 @@
 ;;; -- Mode entry --------------------------------------------------------------
 
 ;; Major mode for cryptol code
+;;;###autoload
 (define-derived-mode cryptol-mode prog-mode "Cryptol"
   "Major mode for editing Cryptol files"
   
@@ -179,6 +180,7 @@
 (provide 'cryptol-mode)
 
 ;; Major mode used for .scr files (batch files)
+;;;###autoload
 (define-generic-mode 'cryptol-batch-mode
   '("#")                         ;; comments start with #
   '("help" "let" "load" "print"  ;; keywords
@@ -196,8 +198,10 @@
 
 ;;; -- Autoloading -------------------------------------------------------------
 
+;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.cry$"  . cryptol-mode))
 ;;(add-to-list 'auto-mode-alist '("\\.lcry$" . literate-cryptol-mode))
+;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.scr$"  . cryptol-batch-mode))
 
 ;;; cryptol-mode.el ends here
