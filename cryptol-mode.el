@@ -152,7 +152,10 @@
 (defvar cryptol-string-regexp "\"\\.\\*\\?")
 
 (defvar cryptol-symbols-regexp
-  (regexp-opt '( "[" "]" ";" ":" "," "{" "}" "=>" "->" "@") 'words))
+  (regexp-opt '( "[" "]" ";" ":" "," "{" "}" "=>" "->" "@")))
+
+(defvar cryptol-bool-regexp
+  (regexp-opt '( "True" "False")))
 
 (defvar cryptol-keywords-regexp
   (regexp-opt '("where" "let" "if" "else" "then") 'words))
@@ -161,6 +164,7 @@
   `((,cryptol-string-regexp   . font-lock-string-face)
     (,cryptol-symbols-regexp  . font-lock-builtin-face)
     (,cryptol-keywords-regexp . font-lock-keyword-face)
+    (,cryptol-bool-regexp     . font-lock-constant-face)
     ))
 
 ;;; -- Mode entry --------------------------------------------------------------
