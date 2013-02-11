@@ -106,6 +106,7 @@
 (defvar cryptol-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "C-c C-l") 'cryptol-repl)
+    (define-key map (kbd "C-c i") 'imenu)
     map)
   "Keymap for `cryptol-mode'.")
 
@@ -144,6 +145,7 @@
   "Menu for `cryptol-mode'."
   '("Cryptol"
     ["Start REPL" cryptol-repl]
+    ["imenu"      imenu]
     "---"
     ["Customize Cryptol group" (customize-group 'cryptol)]
     "---"
