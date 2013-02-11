@@ -48,15 +48,16 @@
 ;; * Better REPL integration
 ;;  - Run 'genTests' or 'check' or 'exhaust' on given function/theorem
 ;;  - Automatically run batch-mode files
-;; * Syntax mode for batch files
+;; * Syntax mode for literate files
 
 (require 'comint)
 (require 'easymenu)
 (require 'font-lock)
+(require 'generic-x)
 
 ;;; -- Customization variables -------------------------------------------------
 
-(defconst cryptol-mode-version "0.0.0.0-DEV"
+(defconst cryptol-mode-version "0.0.0"
   "The version of `cryptol-mode'.")
 
 (defgroup cryptol nil
@@ -161,6 +162,7 @@
 
 ;;; -- Mode entry --------------------------------------------------------------
 
+;; Major mode for cryptol code
 (define-derived-mode cryptol-mode prog-mode "Cryptol"
   "Major mode for editing Cryptol files"
   
@@ -171,13 +173,28 @@
   (set (make-local-variable 'tab-width) cryptol-tab-width)
   (setq indent-tabs-mode nil))
 
-; El fin.
 (provide 'cryptol-mode)
+
+;; Major mode used for .scr files (batch files)
+(define-generic-mode 'cryptol-batch-mode
+  '("#")                         ;; comments start with #
+  '("help" "let" "load" "print"  ;; keywords
+    "browse" "cd" "quit" "set"
+    "reload" "check" "genTests"
+    "exhaust" "type" "version"
+    "echo" "info" "config"
+    "edit" "script"
+    )                            
+  '((":" . 'font-lock-builtin)   ;; ':' is a builtin
+    ("@" . 'font-lock-operator)) ;; '@' is an operator
+  nil nil                        ;; autoload is set below
+  "A mode for Cryptol batch files"
+)
 
 ;;; -- Autoloading -------------------------------------------------------------
 
 (add-to-list 'auto-mode-alist '("\\.cry$"  . cryptol-mode))
-(add-to-list 'auto-mode-alist '("\\.lcry$" . cryptol-mode))
-(add-to-list 'auto-mode-alist '("\\.scr$"  . cryptol-mode))
+;;(add-to-list 'auto-mode-alist '("\\.lcry$" . literate-cryptol-mode))
+(add-to-list 'auto-mode-alist '("\\.scr$"  . cryptol-batch-mode))
 
 ;;; cryptol-mode.el ends here
