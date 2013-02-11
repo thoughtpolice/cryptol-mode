@@ -5,7 +5,7 @@
 ;; Author:    Austin Seipp <aseipp [@at] pobox [dot] com>
 ;; URL:       http://github.com/thoughtpolice/cryptol-mode
 ;; Keywords:  cryptol cryptography
-;; Version:   0.0.0
+;; Version:   0.0.0-DEV
 ;; Released:  11 Feburary 2013
 
 ;; This file is not part of GNU Emacs.
@@ -61,7 +61,7 @@
 
 ;;; -- Customization variables -------------------------------------------------
 
-(defconst cryptol-mode-version "0.0.0"
+(defconst cryptol-mode-version "0.0.0-DEV"
   "The version of `cryptol-mode'.")
 
 (defgroup cryptol nil
