@@ -47,6 +47,9 @@
 
 ;; * Indentation mode.
 ;;  - Maybe something like Haskell-mode?
+;; * imenu support
+;; * Better highlighting.
+;;  - We really want to identify function names.
 ;; * Compilation mode.
 ;;  - Detect compiler features?
 ;; * Better REPL integration
