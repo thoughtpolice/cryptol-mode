@@ -4,7 +4,7 @@
 
 ;; Author:    Austin Seipp <aseipp [@at] pobox [dot] com>
 ;; URL:       http://github.com/thoughtpolice/cryptol-mode
-;; Keywords:  cryptol, cryptography, major mode
+;; Keywords:  cryptol cryptography
 ;; Version:   0.0.0
 ;; Released:  11 Feburary 2013
 
