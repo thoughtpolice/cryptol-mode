@@ -160,7 +160,7 @@
   (regexp-opt '( "Bit" "inf")))
 
 (defvar cryptol-keywords-regexp
-  (regexp-opt '("where" "let" "if" "else" "then") 'words))
+  (regexp-opt '("module" "where" "let" "if" "else" "then") 'words))
 
 (defvar cryptol-font-lock-defaults
   `((,cryptol-string-regexp   . font-lock-string-face)
