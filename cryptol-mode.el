@@ -176,7 +176,6 @@
   ;; Indentation, no tabs
   (set (make-local-variable 'tab-width) cryptol-tab-width)
   (setq indent-tabs-mode nil))
-
 (provide 'cryptol-mode)
 
 ;; Major mode used for .scr files (batch files)
@@ -188,13 +187,15 @@
     "reload" "check" "genTests"
     "exhaust" "type" "version"
     "echo" "info" "config"
-    "edit" "script"
-    )                            
+    "edit" "script" "trace"
+    "showtr" "deltr" "autotrace"
+    "compile" "fm" "isabelle"
+    "translate" "equals" "sat"
+    "safe")                            
   '((":" . 'font-lock-builtin)   ;; ':' is a builtin
     ("@" . 'font-lock-operator)) ;; '@' is an operator
   nil nil                        ;; autoload is set below
-  "A mode for Cryptol batch files"
-)
+  "A mode for Cryptol batch files")
 
 ;;; -- Autoloading -------------------------------------------------------------
 
