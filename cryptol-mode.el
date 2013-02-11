@@ -231,20 +231,22 @@
 ;; Major mode used for .scr files (batch files)
 ;;;###autoload
 (define-generic-mode 'cryptol-batch-mode
-  '("#")                         ;; comments start with #
-  '("help" "let" "load" "print"  ;; keywords
-    "browse" "cd" "quit" "set"
-    "reload" "check" "genTests"
-    "exhaust" "type" "version"
-    "echo" "info" "config"
-    "edit" "script" "trace"
-    "showtr" "deltr" "autotrace"
-    "compile" "fm" "isabelle"
-    "translate" "equals" "sat"
-    "safe")
-  '((":" . 'font-lock-builtin)   ;; ':' is a builtin
-    ("@" . 'font-lock-operator)) ;; '@' is an operator
-  nil nil                        ;; autoload is set below
+  '("#")                               ;; comments start with #
+  '("autotrace" "bind_file" "browse"
+    "cd" "check" "compile" "config"
+    "definition" "deltr" "edit"
+    "equals" "exhaust" "fm" "genTests"
+    "getserial" "help" "info" 
+    "install-runtime" "isabelle"
+    "isabelle-b" "isabelle-i" "let"
+    "load" "print" "prove" "quit"
+    "reload" "runWith" "safe" "sat"
+    "script" "sendserial" "set" "sfm"
+    "showtr" "trace" "translate"
+    "type" "version")
+  '((":" . 'font-lock-builtin)         ;; ':' is a builtin
+    ("@" . 'font-lock-operator))       ;; '@' is an operator
+  nil nil                              ;; autoload is set below
   "A mode for Cryptol batch files")
 
 ;;; -- Autoloading -------------------------------------------------------------
