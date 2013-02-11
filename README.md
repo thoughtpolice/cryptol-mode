@@ -15,8 +15,7 @@ is recommended. If you're not using Emacs 24, `package.el` is still
 recommended because it's awesome and I say so. But you can still do
 things the old fashioned way too.
 
-[Melpa](https://github.com/milkypostman/melpa.git) is not supported
-(yet?)
+[Melpa](https://github.com/milkypostman/melpa) is not supported (yet?)
 
 ## Installation via Marmalade
 
