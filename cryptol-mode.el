@@ -1,13 +1,16 @@
-;;; cryptol-mode.el --- Cryptol major mode
+;;; cryptol-mode.el --- Cryptol major mode for Emacs
 
 ;; Copyright (c) 2013 Austin Seipp. All rights reserved.
 
 ;; Author:    Austin Seipp <aseipp [@at] pobox [dot] com>
 ;; URL:       http://github.com/thoughtpolice/cryptol-mode
-;; Keywords:  Cryptol major mode
-;; Version:   0.0.0.0
+;; Keywords:  cryptol, cryptography, major mode
+;; Version:   0.0.0
+;; Released:  11 Feburary 2013
 
 ;; This file is not part of GNU Emacs.
+
+;;; License:
 
 ;; Permission is hereby granted, free of charge, to any person obtaining
 ;; a copy of this software and associated documentation files (the
@@ -30,8 +33,22 @@
 ;; 
 ;; [ MIT license: http://www.opensource.org/licenses/MIT ]
 
-;; TODO:
-;;  - Everything
+;;; Commentary:
+
+;; This package provides a major mode for editing, compiling and
+;; running Cryptol code.
+;;
+;; For more information, see http://corp.galois.com/cryptol/
+
+;;; TODO:
+
+;; * Compilation mode
+;;  - Detect compiler features?
+;; * Better highlighting for operators
+;; * Better REPL integration
+;;  - Run 'genTests' or 'check' or 'exhaust' on given function/theorem
+;;  - Automatically run batch-mode files
+;; * Syntax mode for batch files
 
 (require 'comint)
 (require 'easymenu)
