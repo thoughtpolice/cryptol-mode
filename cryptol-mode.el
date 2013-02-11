@@ -68,9 +68,7 @@
   :group 'cryptol)
 
 (defcustom cryptol-mode-hook nil
-  "Hook called by `cryptol-mode'. Examples:
-
-  TODO FIXME"
+  "Hook called by `cryptol-mode'."
   :type  'hook
   :group 'cryptol)
 
