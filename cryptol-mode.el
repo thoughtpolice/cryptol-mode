@@ -140,10 +140,10 @@
   (regexp-opt '( "`" "|" "=>" "->" ":" ">>" ">>>" "<<" "<<<" )))
 
 (defvar cryptol-consts-regexp
-  (regexp-opt '( "True" "False" "inf" "fin" )))
+  (regexp-opt '( "True" "False" "inf" "fin" ) 'words))
 
 (defvar cryptol-type-regexp
-  (regexp-opt '( "Bit" )))
+  (regexp-opt '( "Bit" ) 'words))
 
 (defvar cryptol-keywords-regexp
   (regexp-opt '( "module" "theorem" "where" "include" "instantiate"
