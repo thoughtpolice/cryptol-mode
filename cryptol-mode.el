@@ -117,7 +117,7 @@
   (regexp-opt '( "[" "]" "," "{" "}" "@" "#")))
 
 (defvar cryptol-symbols2-regexp
-  (regexp-opt '( "|" "=>" "->" ":" ">>" ">>>" "<<" "<<<")))
+  (regexp-opt '( "`" "|" "=>" "->" ":" ">>" ">>>" "<<" "<<<" )))
 
 (defvar cryptol-consts-regexp
   (regexp-opt '( "True" "False" "inf" "fin")))
