@@ -236,7 +236,7 @@
 ;; Major mode for cryptol code
 ;;;###autoload
 (define-derived-mode cryptol-mode prog-mode "Cryptol"
-  "Major mode for editing Cryptol files"
+  "Major mode for editing Cryptol code."
 
   ;; Syntax highlighting
   (setq font-lock-defaults '((cryptol-font-lock-defaults)))
@@ -249,6 +249,18 @@
   (make-local-variable 'imenu-create-index-function)
   (setq imenu-create-index-function 'cryptol-imenu-create-index))
 (provide 'cryptol-mode)
+
+;; Major mode for literate cryptol code
+;;;###autoload
+(define-derived-mode literate-cryptol-mode prog-mode "Literate Cryptol"
+  "Major mode for editing Literate Cryptol code."
+
+  ;; Syntax highlighting
+  (setq font-lock-defaults '((lcryptol-font-lock-defaults)))
+
+  ;; Indentation, no tabs
+  (set (make-local-variable 'tab-width) cryptol-tab-width)
+  (setq indent-tabs-mode nil))
 
 ;; Major mode used for .scr files (batch files)
 ;;;###autoload
@@ -274,8 +286,9 @@
 ;;; -- Autoloading -------------------------------------------------------------
 
 ;;;###autoload
-(add-to-list 'auto-mode-alist '("\\.cry$"  . cryptol-mode))
-;;(add-to-list 'auto-mode-alist '("\\.lcry$" . literate-cryptol-mode))
+(add-to-list 'auto-mode-alist '("\\.cry$\\|\\.cyl$"  . cryptol-mode))
+;;;###autoload
+(add-to-list 'auto-mode-alist '("\\.lcry$\\|\\.lcyl$" . literate-cryptol-mode))
 ;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.scr$"  . cryptol-batch-mode))
 
