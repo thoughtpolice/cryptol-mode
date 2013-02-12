@@ -126,7 +126,7 @@
   (regexp-opt '( "Bit" "inf" "fin")))
 
 (defvar cryptol-keywords-regexp
-  (regexp-opt '("module" "theorem" "where" "include"
+  (regexp-opt '("module" "theorem" "where" "include" "instantiate"
 		"let" "if" "else" "then" "type") 'words))
 
 (defvar cryptol-theorem-regexp
