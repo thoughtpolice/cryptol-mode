@@ -45,19 +45,39 @@
 
 ;;; TODO:
 
-;; * Indentation mode.
+;; * Indentation mode:
 ;;  - Maybe something like Haskell-mode?
-;; * Better imenu support
+;; * Better imenu support:
 ;;  - Should support function definitions
 ;;  - Modules? Parameterized modules?
-;; * Better highlighting.
-;;  - We really want to identify function names.
-;; * Compilation mode.
-;;  - Detect compiler features?
-;; * Better REPL integration
-;;  - Run 'genTests' or 'check' or 'exhaust' on given function/theorem
-;;  - Automatically run batch-mode files
-;; * Syntax mode for literate files
+;; * Better highlighting and syntax recognition:
+;;  - Function names in particular.
+;; * Compiler support:
+;;  - Compile to C code based on the buffer name.
+;;  - Ditto with VHDL, etc.
+;;  - Isabelle compilation.
+;;   - Would it be possible to drop from ':isabelle-i' into
+;;     e.g. proof-general or something?
+;; * Interactive features:
+;;  - Mode switching.
+;;  - Run 'check' or 'exhaust' on identifier (see REPL notes below.)
+;;  - Prove function equivalence between top-level named identifiers.
+;;  - Check satisfiability of constraints.
+;; * Debugging:
+;;  - It might be possible to have minimal debugger interaction with
+;;    ':trace' and friends.
+;; * REPL integration:
+;;  - We'd like to be able to set optimization settings.
+;;  - Run 'check' or 'exhaust' on given function/theorem.
+;;  - Automatically run batch-mode files..
+
+;;; Known bugs:
+
+;; * REPL is broken :(
+;; * `imenu' support only identifies theorems.
+;; * Literate file support is non-existant. Seriously.
+;; * Indentation support is also non-existant.
+;; * Highlighting is rather haphazard, but complete.
 
 (require 'comint)
 (require 'easymenu)
