@@ -216,9 +216,9 @@
 
 (defvar cryptol-mode-syntax-table
   (let ((st (make-syntax-table)))
-    (modify-syntax-entry ?/ ". 124b" st)
-    (modify-syntax-entry ?* ". 23" st)
-    (modify-syntax-entry ?\n "> b" st)
+    (modify-syntax-entry ?/ ". 124" st)
+    (modify-syntax-entry ?* ". 23bn" st)
+    (modify-syntax-entry ?\n ">" st)
     st)
   "Syntax table for `cryptol-mode'.")
 
