@@ -106,7 +106,6 @@
 (defvar cryptol-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "C-c C-l") 'cryptol-repl)
-    (define-key map (kbd "C-c i") 'imenu)
     map)
   "Keymap for `cryptol-mode'.")
 
@@ -133,14 +132,36 @@
 (defvar cryptol-theorem-regexp
   "^theorem \\(.*\\):")
 
-;;; -- Menu --------------------------------------------------------------------
+;;; -- Utilities ---------------------------------------------------------------
 
+(defvar *cryptol-backends* nil)
+
+(defun get-cryptol-backends ()
+  "Get the backends supported by the Cryptol compiler."
+  (if (not (eq nil *cryptol-backends*))
+      *cryptol-backends*
+    (let ((cryptol-backends
+	   (nthcdr 2 (split-string
+		    (nth 3 (process-lines cryptol-command "-v"))))))
+      (setq *cryptol-backends* cryptol-backends)
+      *cryptol-backends*)))
+
+;;;###autoload
+(defun cryptol-backends ()
+  "Show the backends supported by the `cryptol-command'."
+  (interactive)
+  (let ((cryptol-backend-out (mapconcat 'identity (get-cryptol-backends) " ")))
+    (message (concat "Cryptol backends: " (concat cryptol-backend-out)))))
+
+;;;###autoload
 (defun cryptol-version ()
   "Show the `cryptol-mode' version in the echo area."
   (interactive)
   (let ((cryptol-ver-out (car (process-lines cryptol-command "-v"))))
-      (message (concat "cryptol-mode v" cryptol-mode-version
-		       ", using " cryptol-ver-out))))
+    (message (concat "cryptol-mode v" cryptol-mode-version
+		     ", using " cryptol-ver-out))))
+
+;;; -- Menu --------------------------------------------------------------------
 
 (easy-menu-define cryptol-mode-menu cryptol-mode-map
   "Menu for `cryptol-mode'."
