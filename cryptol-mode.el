@@ -123,7 +123,7 @@
   (regexp-opt '( "True" "False")))
 
 (defvar cryptol-type-regexp
-  (regexp-opt '( "Bit" "inf")))
+  (regexp-opt '( "Bit" "inf" "fin")))
 
 (defvar cryptol-keywords-regexp
   (regexp-opt '("module" "theorem" "where" "include"
