@@ -70,6 +70,9 @@
 ;;  - We'd like to be able to set optimization settings.
 ;;  - Run 'check' or 'exhaust' on given function/theorem.
 ;;  - Automatically run batch-mode files..
+;; * Cross platformness:
+;;  - Works OK on Linux, OS X
+;;  - Windows? :|
 
 ;;; Known bugs:
 
@@ -77,7 +80,7 @@
 ;; * `imenu' support only identifies theorems.
 ;; * Literate file support is non-existant. Seriously.
 ;; * Indentation support is also non-existant.
-;; * Highlighting is rather haphazard, but complete.
+;; * Highlighting is rather haphazard, but fairly complete.
 
 (require 'comint)
 (require 'easymenu)
