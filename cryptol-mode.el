@@ -76,7 +76,6 @@
 
 ;;; Known bugs:
 
-;; * REPL is broken :(
 ;; * `imenu' support only identifies theorems.
 ;; * Literate file support is non-existant. Seriously.
 ;; * Indentation support is also non-existant.
