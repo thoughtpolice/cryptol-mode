@@ -1,2 +1,7 @@
 *~
 *.elc
+*.cry
+*.cyl
+*.lcry
+*.lcyl
+*.scr
