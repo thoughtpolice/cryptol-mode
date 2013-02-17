@@ -62,7 +62,7 @@
 ;;  - Mode switching.
 ;;  - Run 'check' or 'exhaust' on identifier (see REPL notes below.)
 ;;  - Prove function equivalence between top-level named identifiers.
-;;  - Check satisfiability of constraints.
+;;  - Check satisfiability of constraints/propositions.
 ;; * Debugging:
 ;;  - It might be possible to have minimal debugger interaction with
 ;;    ':trace' and friends.
