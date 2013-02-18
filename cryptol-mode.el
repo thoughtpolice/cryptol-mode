@@ -82,6 +82,7 @@
 ;; * Highlighting is rather haphazard, but fairly complete.
 
 (require 'comint)
+(require 'shell)
 (require 'easymenu)
 (require 'font-lock)
 (require 'generic-x)
@@ -123,6 +124,11 @@
 (defcustom cryptol-mode-hook nil
   "Hook called by `cryptol-mode'."
   :type  'hook
+  :group 'cryptol)
+
+(defcustom cryptol-repl-hook nil
+  "Hook called when `cryptol-repl' is invoked."
+  :type 'hook
   :group 'cryptol)
 
 (defvar cryptol-mode-map
@@ -196,7 +202,17 @@
     ["Version info" cryptol-version]
     ))
 
-;;; -- Commands ----------------------------------------------------------------
+;;; -- REPL --------------------------------------------------------------------
+
+(defvar cryptol-repl-process nil
+  "The active Cryptol subprocess corresponding to the current buffer.")
+
+(defvar cryptol-repl-process-buffer nil
+  "*Buffer used for communication with Cryptol subprocess for current buffer.")
+
+(defvar cryptol-repl-comint-prompt-regexp
+  "^\\*?[[:upper:]][\\._[:alnum:]]*\\( \\*?[[:upper:]][\\._[:alnum:]]*\\)*> "
+  "A regexp that matches the Cryptol prompt.")
 
 (defun make-repl-command (file)
   (append (list cryptol-command) cryptol-args-repl (list file)))
@@ -204,14 +220,33 @@
 (defun cryptol-repl ()
   "Launch a Cryptol REPL using `cryptol-command' as an inferior executable."
   (interactive)
-  (if (eq nil (buffer-file-name))
-      (message "Please save the current buffer before using the REPL.")
-    (unless (comint-check-proc "*CryptolREPL*")
-       (set-buffer
-	(apply 'make-comint "CryptolREPL"
-	       "env" nil
-	       (make-repl-command (buffer-file-name)))))
-    (pop-to-buffer "*CryptolREPL*")))
+
+  (message "Starting Cryptol REPL via `%s'." cryptol-command)
+  (setq cryptol-repl-process-buffer
+	(apply 'make-comint
+	       "cryptol" cryptol-command nil
+	       cryptol-args-repl))
+  (setq cryptol-repl-process
+	(get-buffer-process cryptol-repl-process-buffer))
+
+  ;; Select REPL buffer and track `:cd' changes etc.
+  (set-buffer cryptol-repl-process-buffer)
+  (make-local-variable 'shell-cd-regexp)
+  (make-local-variable 'shell-dirtrackp)
+
+  (setq shell-cd-regexp ":cd")
+  (setq shell-dirtrackp t)
+  (add-hook 'comint-input-filter-functions 'shell-directory-tracker nil 'local)
+
+  (setq comint-prompt-regexp cryptol-repl-comint-prompt-regexp)
+
+  (setq comint-input-autoexpand nil)
+  (setq comint-process-echoes nil)
+
+  ;; Run hooks and clear message buffer
+  (run-hooks 'cryptol-repl-hook)
+  (pop-to-buffer "*cryptol*")
+  (message ""))
 
 ;;; -- imenu -------------------------------------------------------------------
 
