@@ -68,7 +68,7 @@ See [AUTHORS.txt](https://raw.github.com/thoughtpolice/cryptol-mode/master/AUTHO
 
 # License
 
-MIT. See
+GPLv3 or later. See
 [LICENSE.txt](https://raw.github.com/thoughtpolice/cryptol-mode/master/LICENSE.txt)
 for terms of copyright and redistribution.
 
