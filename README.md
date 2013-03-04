@@ -1,7 +1,19 @@
 # Cryptol Major Mode for Emacs
 
 This package provides an Emacs major mode for [Cryptol][] - a DSL for
-writing cryptographic code.
+writing cryptographic code. From the homepage:
+
+> Cryptol is a domain-specific language (DSL) and tool suite that
+> simplifies the specification of a cryptographic algorithm and then
+> compiles the specification into VHDL... Cryptol is fully executable,
+> allowing designers to experiment with their programs incrementally
+> as their designs evolve. Cryptol compilers can generate C, C++, and
+> Haskell software implementations, and VHDL or Verilog HDL hardware
+> implementations... In addition to generating implementations of
+> cryptographic algorithms, Cryptol tools can verify the faithfulness
+> of an implementation to a reference specification, at each stage of
+> the toolchain.
+
 
 [Cryptol]: http://corp.galois.com/cryptol/
 
