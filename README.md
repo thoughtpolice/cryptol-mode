@@ -14,38 +14,50 @@ writing cryptographic code. From the homepage:
 > of an implementation to a reference specification, at each stage of
 > the toolchain.
 
-
 [Cryptol]: http://corp.galois.com/cryptol/
 
 # Installation
 
-There are two ways to get this package: via [marmalade][] if you're
-using `package.el`, or via manual installation.
+There are three ways of installing this package:
 
-If you're using Emacs 24 or above, then installation via `package.el`
-is recommended. If you're not using Emacs 24, `package.el` is still
-recommended because it's awesome and I say so. But you can still do
-things the old fashioned way too.
+  * [marmalade][] via `package.el`.
+  * [MELPA][] via `package.el` (if you want to track the git
+    repository.)
+  * Manual installation.
 
-[Melpa](https://github.com/milkypostman/melpa) is not supported (yet?)
+Emacs v24 has `package.el` preinstalled. You will need to configure
+the mentioned repositories yourself (refer to the homepages.) If
+you're not using Emacs v24 yet, then you can still install manually.
 
-## Installation via Marmalade
+## Installation via Marmalade/MELPA
 
-If you're using [marmalade][] (and if you're not, *ask yourself why!*)
-then installation is as easy as doing `M-x package-install
-cryptol-mode`.
+If you've configured your repositories, you need to decide what you
+want:
 
-## Manual install
+  * If you want the latest stable version, **you should use
+    marmalade**.
+  * If you want to track the git repository, **you should use MELPA**.
+
+If you've configure marmalade, then installation is as easy as `M-x
+package-install RET cryptol-mode`. The same is true for MELPA.
+
+If you're using marmalde and MELPA, then MELPA's build will override
+the stable version. You can exclude MELPA's `cryptol-mode` using
+[melpa.el](https://github.com/milkypostman/melpa#melpa-package), by
+setting your `package-archive-exclude-alist` to include `("melpa"
+. cryptol-mode)`.
+
+## Manual installation
 
 Even if you don't use `package.el`, installation is pretty
 simple. Just put `cryptol-mode.el` somewhere on your `load-path` and
-then just add:
+then add:
 
 ```lisp
 (require 'cryptol-mode)
 ```
 
-to your `.emacs`, and you're done.
+to your `.emacs`. You're done.
 
 # Usage
 
@@ -85,6 +97,7 @@ GPLv3 or later. See
 for terms of copyright and redistribution.
 
 [marmalade]: http://marmalade-repo.org/
+[MELPA]: http://melpa.milkbox.net/
 [contribute]: https://github.com/thoughtpolice/cryptol-mode/blob/master/CONTRIBUTING.md
 [issue tracker]: http://github.com/thoughtpolice/cryptol-mode/issues
 [gh]: http://github.com/thoughtpolice/cryptol-mode
