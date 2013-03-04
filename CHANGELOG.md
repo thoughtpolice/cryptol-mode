@@ -1,3 +1,13 @@
+0.0.3
+-----
+
+  * WIP
+
+0.0.2
+-----
+
+  * Fix release date information.
+
 0.0.1
 -----
 
