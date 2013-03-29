@@ -212,7 +212,7 @@
   "A regexp that matches the Cryptol prompt.")
 
 (defun make-repl-command (file)
-  (append (list cryptol-command) cryptol-args-repl (list file)))
+  (append cryptol-args-repl (list file)))
 
 (defun cryptol-repl ()
   "Launch a Cryptol REPL using `cryptol-command' as an inferior executable."
@@ -222,7 +222,9 @@
   (setq cryptol-repl-process-buffer
 	(apply 'make-comint
 	       "cryptol" cryptol-command nil
-	       cryptol-args-repl))
+	       (if (eq nil (buffer-file-name))
+		   cryptol-args-repl
+		 (make-repl-command buffer-file-name))))
   (setq cryptol-repl-process
 	(get-buffer-process cryptol-repl-process-buffer))
 
