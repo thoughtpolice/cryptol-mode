@@ -64,7 +64,7 @@
 ;; * REPL integration:
 ;;  - We'd like to be able to set optimization settings.
 ;;  - Run 'check' or 'exhaust' on given function/theorem.
-;;  - Automatically run batch-mode files..
+;;  - Automatically run batch-mode files.
 ;; * Cross platformness:
 ;;  - Works OK on Linux, OS X
 ;;  - Windows? :|
