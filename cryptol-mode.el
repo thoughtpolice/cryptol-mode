@@ -313,6 +313,7 @@
   ;; Indentation, no tabs
   (set (make-local-variable 'tab-width) cryptol-tab-width)
   (setq indent-tabs-mode nil))
+(provide 'literate-cryptol-mode)
 
 ;; Major mode used for .scr files (batch files)
 ;;;###autoload
@@ -334,6 +335,7 @@
     ("@" . 'font-lock-operator))       ;; '@' is an operator
   nil nil                              ;; autoload is set below
   "A mode for Cryptol batch files")
+(provide 'cryptol-batch-mode)
 
 ;;; -- Autoloading -------------------------------------------------------------
 
