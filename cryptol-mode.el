@@ -287,7 +287,7 @@
 
 ;; Major mode for cryptol code
 ;;;###autoload
-(define-derived-mode cryptol-mode prog-mode "Cryptol"
+(define-derived-mode cryptol-mode fundamental-mode "Cryptol"
   "Major mode for editing Cryptol code."
 
   ;; Syntax highlighting
@@ -304,7 +304,7 @@
 
 ;; Major mode for literate cryptol code
 ;;;###autoload
-(define-derived-mode literate-cryptol-mode prog-mode "Literate Cryptol"
+(define-derived-mode literate-cryptol-mode fundamental-mode "Literate Cryptol"
   "Major mode for editing Literate Cryptol code."
 
   ;; Syntax highlighting
