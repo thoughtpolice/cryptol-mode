@@ -193,10 +193,9 @@
     ["imenu"      imenu]
     "---"
     ["Customize Cryptol group" (customize-group 'cryptol)]
+    ["Cryptol version info" cryptol-version]
     "---"
     ["Recolor buffer" font-lock-fontify-buffer t]
-    "---"
-    ["Cryptol version info" cryptol-version]
     ))
 
 ;;; -- REPL --------------------------------------------------------------------
