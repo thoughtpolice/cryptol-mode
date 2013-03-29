@@ -211,9 +211,6 @@
   "^\\*?[[:upper:]][\\._[:alnum:]]*\\( \\*?[[:upper:]][\\._[:alnum:]]*\\)*> "
   "A regexp that matches the Cryptol prompt.")
 
-(defun make-repl-command (file)
-  (append cryptol-args-repl (list file)))
-
 (defun cryptol-repl ()
   "Launch a Cryptol REPL using `cryptol-command' as an inferior executable."
   (interactive)
@@ -224,7 +221,7 @@
 	       "cryptol" cryptol-command nil
 	       (if (eq nil (buffer-file-name))
 		   cryptol-args-repl
-		 (make-repl-command buffer-file-name))))
+		 (append cryptol-args-repl (list buffer-file-name)))))
   (setq cryptol-repl-process
 	(get-buffer-process cryptol-repl-process-buffer))
 
