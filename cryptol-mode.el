@@ -127,11 +127,10 @@
   :group 'cryptol)
 
 (defvar cryptol-mode-map
-  "Keymap for `cryptol-mode'."
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "C-c C-l") 'cryptol-repl)
-    map))
-  
+    map)
+  "Keymap for `cryptol-mode'.")
 
 ;;; -- Language Syntax ---------------------------------------------------------
 
