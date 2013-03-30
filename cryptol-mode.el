@@ -165,7 +165,8 @@
   TODO: Elaborate further on this stupidity."
   (if (not (eq nil args))
       (let ((cryptol-output (process-lines cryptol-command "-v")))
-	(if (not (eq nil (string-prefix-p "No entry for terminal type " (car cryptol-output))))
+	(if (not (eq nil (string-prefix-p "No entry for terminal type "
+					  (car cryptol-output))))
 	    (nthcdr 2 cryptol-output)
 	  cryptol-output))))
 
@@ -202,7 +203,7 @@
   (interactive)
   (let ((cryptol-ver-out (mapconcat 'identity (get-cryptol-version) "")))
     (message (concat "cryptol-mode v" cryptol-mode-version
-		     ", using " cryptol-ver-out))))
+		     ", using Cryptol version " cryptol-ver-out))))
 
 ;;; -- Menu --------------------------------------------------------------------
 
