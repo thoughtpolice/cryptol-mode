@@ -158,6 +158,7 @@
 ;;; -- Utilities ---------------------------------------------------------------
 
 (defvar *cryptol-backends* nil)
+(defvar *cryptol-version* nil)
 
 (defun get-cryptol-backends ()
   "Get the backends supported by the Cryptol compiler."
@@ -168,6 +169,18 @@
 		    (nth 3 (process-lines cryptol-command "-v"))))))
       (setq *cryptol-backends* cryptol-backends)
       *cryptol-backends*)))
+
+(defun get-cryptol-version ()
+  "Get the version information supported by `cryptol-mode', including license."
+  (if (not (eq nil *cryptol-version*))
+      *cryptol-version*
+    (let ((cryptol-version-list
+	   (nthcdr 2 (split-string
+		      (car (process-lines cryptol-command "-v")))))
+	  (cryptol-version
+	   (mapconcat 'identity (get-cryptol-backends) "")))
+      (setq *cryptol-version* cryptol-version)
+      *cryptol-version*)))
 
 ;;;###autoload
 (defun cryptol-backends ()
@@ -180,7 +193,7 @@
 (defun cryptol-version ()
   "Show the `cryptol-mode' version in the echo area."
   (interactive)
-  (let ((cryptol-ver-out (car (process-lines cryptol-command "-v"))))
+  (let ((cryptol-ver-out (get-cryptol-version)))
     (message (concat "cryptol-mode v" cryptol-mode-version
 		     ", using " cryptol-ver-out))))
 
