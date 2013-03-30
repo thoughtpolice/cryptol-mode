@@ -183,11 +183,9 @@
   "Get the version information supported by `cryptol-mode', including license."
   (if (not (eq nil *cryptol-version*))
       *cryptol-version*
-    (let ((cryptol-version-list
+    (let ((cryptol-version
 	   (nthcdr 2 (split-string
-		      (car (process-lines-cryptol "-v")))))
-	  (cryptol-version
-	   (mapconcat 'identity (get-cryptol-backends) "")))
+		      (car (process-lines-cryptol "-v"))))))
       (setq *cryptol-version* cryptol-version)
       *cryptol-version*)))
 
@@ -202,7 +200,7 @@
 (defun cryptol-version ()
   "Show the `cryptol-mode' version in the echo area."
   (interactive)
-  (let ((cryptol-ver-out (get-cryptol-version)))
+  (let ((cryptol-ver-out (mapconcat 'identity (get-cryptol-version) "")))
     (message (concat "cryptol-mode v" cryptol-mode-version
 		     ", using " cryptol-ver-out))))
 
