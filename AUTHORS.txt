@@ -1,3 +1,10 @@
 Author, target of blame:
 
   Austin Seipp <aseipp [@at] pobox [dot] com>
+
+People who contributed code, patches or lively discussion include:
+
+  Sean Weaver
+
+Part of the comint integration was lightly taken from `haskell-mode`,
+which has been contributed to by many people over the years.
