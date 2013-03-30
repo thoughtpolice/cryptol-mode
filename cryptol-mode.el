@@ -160,13 +160,22 @@
 (defvar *cryptol-backends* nil)
 (defvar *cryptol-version* nil)
 
+(defun process-lines-cryptol (&rest args)
+  "Process output from cryptol, removing stupid libedit noise.
+  TODO: Elaborate further on this stupidity."
+  (if (not (eq nil args))
+      (let ((cryptol-output (process-lines cryptol-command "-v")))
+	(if (not (eq nil (string-prefix-p "No entry for terminal type " (car cryptol-output))))
+	    (nthcdr 2 cryptol-output)
+	  cryptol-output))))
+
 (defun get-cryptol-backends ()
   "Get the backends supported by the Cryptol compiler."
   (if (not (eq nil *cryptol-backends*))
       *cryptol-backends*
     (let ((cryptol-backends
 	   (nthcdr 2 (split-string
-		    (nth 3 (process-lines cryptol-command "-v"))))))
+		    (nth 3 (process-lines-cryptol "-v"))))))
       (setq *cryptol-backends* cryptol-backends)
       *cryptol-backends*)))
 
@@ -176,7 +185,7 @@
       *cryptol-version*
     (let ((cryptol-version-list
 	   (nthcdr 2 (split-string
-		      (car (process-lines cryptol-command "-v")))))
+		      (car (process-lines-cryptol "-v")))))
 	  (cryptol-version
 	   (mapconcat 'identity (get-cryptol-backends) "")))
       (setq *cryptol-version* cryptol-version)
