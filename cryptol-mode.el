@@ -160,7 +160,30 @@
 (defvar cryptol-theorem-regexp
   "^theorem \\(.*\\):")
 
-;;; -- Utilities ---------------------------------------------------------------
+;;; -- Syntax table and highlighting -------------------------------------------
+
+(defvar cryptol-mode-syntax-table
+  (let ((st (make-syntax-table)))
+    (modify-syntax-entry ?/ ". 124" st)
+    (modify-syntax-entry ?* ". 23bn" st)
+    (modify-syntax-entry ?\n ">" st)
+    st)
+  "Syntax table for `cryptol-mode'.")
+
+(defvar cryptol-font-lock-defaults
+  `((,cryptol-string-regexp   . font-lock-string-face)
+    (,cryptol-symbols-regexp  . font-lock-builtin-face)
+    (,cryptol-symbols2-regexp . font-lock-variable-name-face)
+    (,cryptol-keywords-regexp . font-lock-keyword-face)
+    (,cryptol-consts-regexp   . font-lock-constant-face)
+    (,cryptol-type-regexp     . font-lock-type-face)
+    ))
+
+;;; -- Indentation -------------------------------------------------------------
+
+; TODO
+
+;;; -- Utilities, cryptol info, etc. -------------------------------------------
 
 (defvar *cryptol-backends* nil)
 (defvar *cryptol-version* nil)
@@ -210,7 +233,7 @@
     (message (concat "cryptol-mode v" cryptol-mode-version
 		     ", using Cryptol version " cryptol-ver-out))))
 
-;;; -- Menu --------------------------------------------------------------------
+;;; -- imenu support -----------------------------------------------------------
 
 (easy-menu-define cryptol-mode-menu cryptol-mode-map
   "Menu for `cryptol-mode'."
@@ -225,7 +248,26 @@
     ["Recolor buffer" font-lock-fontify-buffer t]
     ))
 
-;;; -- REPL --------------------------------------------------------------------
+(defun cryptol-imenu-create-index ()
+  "Creates an imenu index of all the methods/theorems in the buffer."
+  (interactive)
+
+  (goto-char (point-min))
+  (let ((imenu-list '()) assign pos)
+    (while (re-search-forward
+	    (concat "\\("
+		    cryptol-theorem-regexp
+		    "\\)")
+	    (point-max)
+	    t)
+      ;; Look for any theorems and add them to the list
+      (when (match-string 2)
+	(setq pos (match-beginning 2))
+	(setq assign (match-string 2))
+	(push (cons assign pos) imenu-list)))
+    imenu-list))
+
+;;; -- REPL interaction --------------------------------------------------------
 
 (defvar cryptol-repl-process nil
   "The active Cryptol subprocess corresponding to the current buffer.")
@@ -269,46 +311,6 @@
   (run-hooks 'cryptol-repl-hook)
   (pop-to-buffer "*cryptol*")
   (message ""))
-
-;;; -- imenu -------------------------------------------------------------------
-
-(defun cryptol-imenu-create-index ()
-  "Creates an imenu index of all the methods/theorems in the buffer."
-  (interactive)
-
-  (goto-char (point-min))
-  (let ((imenu-list '()) assign pos)
-    (while (re-search-forward
-	    (concat "\\("
-		    cryptol-theorem-regexp
-		    "\\)")
-	    (point-max)
-	    t)
-      ;; Look for any theorems and add them to the list
-      (when (match-string 2)
-	(setq pos (match-beginning 2))
-	(setq assign (match-string 2))
-	(push (cons assign pos) imenu-list)))
-    imenu-list))
-
-;;; -- Syntax table and highlighting -------------------------------------------
-
-(defvar cryptol-mode-syntax-table
-  (let ((st (make-syntax-table)))
-    (modify-syntax-entry ?/ ". 124" st)
-    (modify-syntax-entry ?* ". 23bn" st)
-    (modify-syntax-entry ?\n ">" st)
-    st)
-  "Syntax table for `cryptol-mode'.")
-
-(defvar cryptol-font-lock-defaults
-  `((,cryptol-string-regexp   . font-lock-string-face)
-    (,cryptol-symbols-regexp  . font-lock-builtin-face)
-    (,cryptol-symbols2-regexp . font-lock-variable-name-face)
-    (,cryptol-keywords-regexp . font-lock-keyword-face)
-    (,cryptol-consts-regexp   . font-lock-constant-face)
-    (,cryptol-type-regexp     . font-lock-type-face)
-    ))
 
 ;;; -- Mode entry --------------------------------------------------------------
 
