@@ -194,6 +194,7 @@
     "---"
     ["Customize Cryptol group" (customize-group 'cryptol)]
     ["Cryptol version info" cryptol-version]
+    ["Cryptol backends" cryptol-backends]
     "---"
     ["Recolor buffer" font-lock-fontify-buffer t]
     ))
