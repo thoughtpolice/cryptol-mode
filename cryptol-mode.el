@@ -189,7 +189,7 @@
 (defvar *cryptol-version* nil)
 
 (defun process-lines-cryptol (&rest args)
-  "Process output from cryptol, removing stupid libedit noise.
+  "Process output from cryptol, removing stupid libedit noise on Linux.
   TODO: Elaborate further on this stupidity."
   (if (not (eq nil args))
       (let ((cryptol-output (process-lines cryptol-command "-v")))
