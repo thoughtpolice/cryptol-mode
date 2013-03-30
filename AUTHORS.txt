@@ -1,6 +1,6 @@
 Author, target of blame:
 
-  Austin Seipp <aseipp [@at] pobox [dot] com>
+  Austin Seipp <aseipp [@at] pobox [.dot] com>
 
 People who contributed code, patches or lively discussion include:
 
