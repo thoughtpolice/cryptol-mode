@@ -2,9 +2,17 @@ Author, target of blame:
 
   Austin Seipp <aseipp [@at] pobox [.dot] com>
 
-People who contributed code, patches or lively discussion include:
+People who contributed code, ideas or lively discussion include, in no
+particular order:
 
   Sean Weaver
 
+If you're not mentioned above but would like to be, please contact me.
+
 Part of the comint integration was lightly taken from `haskell-mode`,
 which has been contributed to by many people over the years.
+
+A very special thanks must go to Sean Weaver and Galois Inc. Thanks to them, I
+was graciously provided an up-to-date Cryptol license, allowing development of
+new features for cryptol-mode, supporting both the commercial and academic
+communities. Their contributions have been invaluable.
