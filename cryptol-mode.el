@@ -81,6 +81,7 @@
 (require 'easymenu)
 (require 'font-lock)
 (require 'generic-x)
+(require 'thingatpt)
 
 ;;; -- Customization variables -------------------------------------------------
 
@@ -134,6 +135,7 @@
 (defvar cryptol-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "C-c C-l") 'cryptol-repl)
+    (define-key map (kbd "M-t") 'cryptol-insert-type-sig)
     map)
   "Keymap for `cryptol-mode'.")
 
@@ -192,7 +194,7 @@
   "Process output from cryptol, removing stupid libedit noise on Linux.
   TODO: Elaborate further on this stupidity."
   (if (not (eq nil args))
-      (let ((cryptol-output (process-lines cryptol-command "-v")))
+      (let ((cryptol-output (apply 'process-lines (append (list cryptol-command) args))))
 	(if (not (eq nil (string-prefix-p "No entry for terminal type "
 					  (car cryptol-output))))
 	    (nthcdr 2 cryptol-output)
@@ -218,6 +220,12 @@
       (setq *cryptol-version* cryptol-version)
       *cryptol-version*)))
 
+(defun get-type-sig-for-symbol (sym)
+  "Get the type signature for a symbol."
+  (interactive)
+  (let ((out (process-lines-cryptol "-qns" (buffer-file-name) "-c" (concat ":type " sym))))
+    (mapconcat 'identity out " ")))
+
 ;;;###autoload
 (defun cryptol-backends ()
   "Show the backends supported by the `cryptol-command'."
@@ -232,6 +240,13 @@
   (let ((cryptol-ver-out (mapconcat 'identity (get-cryptol-version) "")))
     (message (concat "cryptol-mode v" cryptol-mode-version
 		     ", using Cryptol version " cryptol-ver-out))))
+
+(defun cryptol-insert-type-sig ()
+  "Insert a type signature for the symbol under point."
+  (interactive)
+  (let ((sym (thing-at-point 'symbol)))
+    (message (get-type-sig-for-symbol sym)))
+  )
 
 ;;; -- imenu support -----------------------------------------------------------
 
