@@ -157,7 +157,7 @@
 
 (defvar cryptol-keywords-regexp
   (regexp-opt '( "module" "theorem" "where" "include" "instantiate"
-		 "let" "if" "else" "then" "type" ) 'words))
+                 "let" "if" "else" "then" "type" ) 'words))
 
 (defvar cryptol-theorem-regexp
   "^theorem \\(.*\\):")
@@ -195,18 +195,18 @@
   TODO: Elaborate further on this stupidity."
   (if (not (eq nil args))
       (let ((cryptol-output (apply 'process-lines (append (list cryptol-command) args))))
-	(if (not (eq nil (string-prefix-p "No entry for terminal type "
-					  (car cryptol-output))))
-	    (nthcdr 2 cryptol-output)
-	  cryptol-output))))
+        (if (not (eq nil (string-prefix-p "No entry for terminal type "
+                                          (car cryptol-output))))
+            (nthcdr 2 cryptol-output)
+          cryptol-output))))
 
 (defun get-cryptol-backends ()
   "Get the backends supported by the Cryptol compiler."
   (if (not (eq nil *cryptol-backends*))
       *cryptol-backends*
     (let ((cryptol-backends
-	   (nthcdr 2 (split-string
-		    (nth 3 (process-lines-cryptol "-v"))))))
+           (nthcdr 2 (split-string
+                    (nth 3 (process-lines-cryptol "-v"))))))
       (setq *cryptol-backends* cryptol-backends)
       *cryptol-backends*)))
 
@@ -215,8 +215,8 @@
   (if (not (eq nil *cryptol-version*))
       *cryptol-version*
     (let ((cryptol-version
-	   (nthcdr 2 (split-string
-		      (car (process-lines-cryptol "-v"))))))
+           (nthcdr 2 (split-string
+                      (car (process-lines-cryptol "-v"))))))
       (setq *cryptol-version* cryptol-version)
       *cryptol-version*)))
 
@@ -239,7 +239,7 @@
   (interactive)
   (let ((cryptol-ver-out (mapconcat 'identity (get-cryptol-version) "")))
     (message (concat "cryptol-mode v" cryptol-mode-version
-		     ", using Cryptol version " cryptol-ver-out))))
+                     ", using Cryptol version " cryptol-ver-out))))
 
 (defun cryptol-insert-type-sig ()
   "Insert a type signature for the symbol under point."
@@ -270,16 +270,16 @@
   (goto-char (point-min))
   (let ((imenu-list '()) assign pos)
     (while (re-search-forward
-	    (concat "\\("
-		    cryptol-theorem-regexp
-		    "\\)")
-	    (point-max)
-	    t)
+            (concat "\\("
+                    cryptol-theorem-regexp
+                    "\\)")
+            (point-max)
+            t)
       ;; Look for any theorems and add them to the list
       (when (match-string 2)
-	(setq pos (match-beginning 2))
-	(setq assign (match-string 2))
-	(push (cons assign pos) imenu-list)))
+        (setq pos (match-beginning 2))
+        (setq assign (match-string 2))
+        (push (cons assign pos) imenu-list)))
     imenu-list))
 
 ;;; -- REPL interaction --------------------------------------------------------
@@ -300,13 +300,13 @@
 
   (message "Starting Cryptol REPL via `%s'." cryptol-command)
   (setq cryptol-repl-process-buffer
-	(apply 'make-comint
-	       "cryptol" cryptol-command nil
-	       (if (eq nil (buffer-file-name))
-		   cryptol-args-repl
-		 (append cryptol-args-repl (list buffer-file-name)))))
+        (apply 'make-comint
+               "cryptol" cryptol-command nil
+               (if (eq nil (buffer-file-name))
+                   cryptol-args-repl
+                 (append cryptol-args-repl (list buffer-file-name)))))
   (setq cryptol-repl-process
-	(get-buffer-process cryptol-repl-process-buffer))
+        (get-buffer-process cryptol-repl-process-buffer))
 
   ;; Select REPL buffer and track `:cd' changes etc.
   (set-buffer cryptol-repl-process-buffer)
@@ -367,7 +367,7 @@
     "cd" "check" "compile" "config"
     "definition" "deltr" "edit"
     "equals" "exhaust" "fm" "genTests"
-    "getserial" "help" "info" 
+    "getserial" "help" "info"
     "install-runtime" "isabelle"
     "isabelle-b" "isabelle-i" "let"
     "load" "print" "prove" "quit"
