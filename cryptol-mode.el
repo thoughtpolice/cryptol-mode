@@ -155,11 +155,12 @@
 (defvar cryptol-type-regexp "\\<[[:upper:]]\\w*")
 
 (defvar cryptol-keywords-regexp
-  (regexp-opt '( "module" "theorem" "where" "include" "instantiate" "as"
-                 "let" "if" "else" "then" "type" "private" "import") 'words))
+  (regexp-opt '( "module" "theorem" "property" "where" "include" "instantiate"
+                 "let" "if" "else" "then" "type" "private" "import"
+                 "as" ) 'words))
 
-(defvar cryptol-theorem-regexp
-  "^theorem \\(.*\\):")
+(defvar cryptol-theorem-or-prop-regexp
+  "^\\(theorem\\|property\\) \\(\\w+\\):?")
 
 ;;; -- Syntax table and highlighting -------------------------------------------
 
@@ -270,14 +271,14 @@
   (let ((imenu-list '()) assign pos)
     (while (re-search-forward
             (concat "\\("
-                    cryptol-theorem-regexp
+                    cryptol-theorem-or-prop-regexp
                     "\\)")
             (point-max)
             t)
       ;; Look for any theorems and add them to the list
-      (when (match-string 2)
-        (setq pos (match-beginning 2))
-        (setq assign (match-string 2))
+      (when (match-string 3)
+        (setq pos (match-beginning 3))
+        (setq assign (match-string 3))
         (push (cons assign pos) imenu-list)))
     imenu-list))
 
