@@ -215,9 +215,13 @@
   (if (not (eq nil *cryptol-version*))
       *cryptol-version*
     (let ((cryptol-version
-           (nthcdr 2 (split-string
-                      (car (process-lines-cryptol "-v"))))))
-      (setq *cryptol-version* cryptol-version)
+           (split-string
+             (car (process-lines-cryptol "-v")))))
+      (if (not (eq nil (nthcdr 2 cryptol-version)))
+          ;; "Cryptol version 1.x.x"
+          (setq *cryptol-version* (nthcdr 2 cryptol-version))
+        ;; "Cryptol v2.x.x"
+        (setq *cryptol-version* (nthcdr 1 cryptol-version)))
       *cryptol-version*)))
 
 (defun get-type-sig-for-symbol (sym)
