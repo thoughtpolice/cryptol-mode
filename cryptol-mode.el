@@ -242,8 +242,11 @@
 (defun cryptol-backends ()
   "Show the backends supported by the `cryptol-command'."
   (interactive)
-  (let ((cryptol-backend-out (mapconcat 'identity (get-cryptol-backends) " ")))
-    (message (concat "Cryptol backends: " (concat cryptol-backend-out)))))
+  (if (is-cryptol-v2)
+      (message "Cryptol backends: N/A")
+    (let ((cryptol-backend-out
+           (mapconcat 'identity (get-cryptol-backends) " ")))
+      (message (concat "Cryptol backends: " (concat cryptol-backend-out))))))
 
 ;;;###autoload
 (defun cryptol-version ()
