@@ -144,10 +144,10 @@
 (defvar cryptol-string-regexp "\"\\.\\*\\?")
 
 (defvar cryptol-symbols-regexp
-  (regexp-opt '( "<|" "|>" "[" "]" "," "{" "}" "@" "#")))
+  (regexp-opt '( "<|" "|>" "[" "]" "," "{" "}" "@" "#" "[_" "_]" "[_]")))
 
 (defvar cryptol-symbols2-regexp
-  (regexp-opt '( "`" "|" "=>" "->" ":" ">>" ">>>" "<<" "<<<" )))
+  (regexp-opt '( "`" "|" "=" ">" "->" "!" ":" ">>" ">>>" "<<" "<<<" "&")))
 
 (defvar cryptol-consts-regexp
   (regexp-opt '( "True" "False" "inf" "fin" ) 'words))
@@ -156,7 +156,7 @@
 
 (defvar cryptol-keywords-regexp
   (regexp-opt '( "module" "theorem" "where" "include" "instantiate" "as"
-                 "let" "if" "else" "then" "type" "private" "import" ) 'words))
+                 "let" "if" "else" "then" "type" "private" "import") 'words))
 
 (defvar cryptol-theorem-regexp
   "^theorem \\(.*\\):")
