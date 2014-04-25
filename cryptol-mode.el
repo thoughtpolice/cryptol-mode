@@ -82,6 +82,7 @@
 (require 'font-lock)
 (require 'generic-x)
 (require 'thingatpt)
+(require 'ansi-color)
 
 ;;; -- Customization variables -------------------------------------------------
 
@@ -103,7 +104,8 @@
   :group 'cryptol)
 
 (defcustom cryptol-args-repl '("-ns")
-  "The arguments to pass to `cryptol-command' when starting a REPL."
+  "The arguments to pass to `cryptol-command' when starting a
+   REPL. Note that currently these only apply to Cryptol 1"
   :type  'list
   :group 'cryptol)
 
@@ -210,6 +212,10 @@
       (setq *cryptol-backends* cryptol-backends)
       *cryptol-backends*)))
 
+(defun is-cryptol-v2 ()
+  "Check if we're using Cryptol v2"
+  (string-prefix-p "2" (get-cryptol-version)))
+
 (defun get-cryptol-version ()
   "Get the version information supported by `cryptol-mode', including license."
   (if (not (eq nil *cryptol-version*))
@@ -219,9 +225,11 @@
              (car (process-lines-cryptol "-v")))))
       (if (not (eq nil (nthcdr 2 cryptol-version)))
           ;; "Cryptol version 1.x.x"
-          (setq *cryptol-version* (nthcdr 2 cryptol-version))
+          (setq *cryptol-version*
+                (mapconcat 'identity (nthcdr 2 cryptol-version) ""))
         ;; "Cryptol v2.x.x"
-        (setq *cryptol-version* (nthcdr 1 cryptol-version)))
+        (setq *cryptol-version*
+              (mapconcat 'identity (nthcdr 1 cryptol-version) "")))
       *cryptol-version*)))
 
 (defun get-type-sig-for-symbol (sym)
@@ -241,7 +249,7 @@
 (defun cryptol-version ()
   "Show the `cryptol-mode' version in the echo area."
   (interactive)
-  (let ((cryptol-ver-out (mapconcat 'identity (get-cryptol-version) "")))
+  (let ((cryptol-ver-out (get-cryptol-version)))
     (message (concat "cryptol-mode v" cryptol-mode-version
                      ", using Cryptol version " cryptol-ver-out))))
 
@@ -303,12 +311,15 @@
   (interactive)
 
   (message "Starting Cryptol REPL via `%s'." cryptol-command)
-  (setq cryptol-repl-process-buffer
+  ;; Don't use -ns if we're using Cryptol 2
+  (let ((args (if (is-cryptol-v2) () cryptol-args-repl)))
+    (setq cryptol-repl-process-buffer
         (apply 'make-comint
                "cryptol" cryptol-command nil
                (if (eq nil (buffer-file-name))
-                   cryptol-args-repl
-                 (append cryptol-args-repl (list buffer-file-name)))))
+                   args
+                 (append args (list buffer-file-name))))))
+
   (setq cryptol-repl-process
         (get-buffer-process cryptol-repl-process-buffer))
 
@@ -320,6 +331,7 @@
   (setq shell-cd-regexp ":cd")
   (setq shell-dirtrackp t)
   (add-hook 'comint-input-filter-functions 'shell-directory-tracker nil 'local)
+  (ansi-color-for-comint-mode-on)
 
   (setq comint-prompt-regexp cryptol-repl-comint-prompt-regexp)
 
