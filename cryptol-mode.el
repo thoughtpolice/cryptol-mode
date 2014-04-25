@@ -152,12 +152,11 @@
 (defvar cryptol-consts-regexp
   (regexp-opt '( "True" "False" "inf" "fin" ) 'words))
 
-(defvar cryptol-type-regexp
-  (regexp-opt '( "Bit" ) 'words))
+(defvar cryptol-type-regexp "\\<[[:upper:]]\\w*")
 
 (defvar cryptol-keywords-regexp
-  (regexp-opt '( "module" "theorem" "where" "include" "instantiate"
-                 "let" "if" "else" "then" "type" ) 'words))
+  (regexp-opt '( "module" "theorem" "where" "include" "instantiate" "as"
+                 "let" "if" "else" "then" "type" "private" "import" ) 'words))
 
 (defvar cryptol-theorem-regexp
   "^theorem \\(.*\\):")
