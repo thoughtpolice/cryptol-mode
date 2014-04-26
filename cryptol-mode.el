@@ -272,8 +272,8 @@
 (easy-menu-define cryptol-mode-menu cryptol-mode-map
   "Menu for `cryptol-mode'."
   '("Cryptol"
-    ["Start REPL" cryptol-repl]
-    ["imenu"      imenu]
+    ["Start REPL"              cryptol-repl]
+    ["Theorems and properties" imenu]
     "---"
     ["Customize Cryptol group" (customize-group 'cryptol)]
     ["Cryptol version info" cryptol-version]
