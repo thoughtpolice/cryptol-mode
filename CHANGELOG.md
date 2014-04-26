@@ -1,4 +1,4 @@
-0.1.0 - Not yet released
+0.1.0 - Released April 26th, 2014
 ------------------------
 
   * Preliminary Cryptol 2 support (issue #15). Cryptol 1 is still
