@@ -366,7 +366,8 @@
 
   ;; imenu
   (make-local-variable 'imenu-create-index-function)
-  (setq imenu-create-index-function 'cryptol-imenu-create-index))
+  (setq imenu-create-index-function 'cryptol-imenu-create-index)
+  (setq imenu-auto-rescan 't))
 (provide 'cryptol-mode)
 
 ;; Major mode for literate cryptol code
