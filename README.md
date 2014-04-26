@@ -59,6 +59,12 @@ then add:
 
 to your `.emacs`. You're done.
 
+# Supported versions
+
+`cryptol-mode` supports Cryptol 1 (tested with 1.8.27-1) and Cryptol 2
+(tested with 2.0.0). The academic and evaluation versions of Cryptol 1
+(1.8.23, 1.8.25) should work but may have other bugs.
+
 # Usage
 
 Open up any `.cry` file to get dropped into `cryptol-mode`
@@ -68,6 +74,9 @@ supported. Literate files are not yet supported.
 Currently supported functionality is:
 
   * Load the current file into the cryptol REPL: `C-c C-l`
+  * Insert type signature of top-level declaration under point: `M-x
+    t` (**Note**: This is only supported with Cryptol 1 at the
+    moment.)
 
 This will expect the `cryptol` executable to be in your `$PATH`. You
 can customize this (and various other aspects of the mode) by
