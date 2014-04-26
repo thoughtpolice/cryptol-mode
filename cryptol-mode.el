@@ -162,7 +162,7 @@
                  "as" ) 'words))
 
 (defvar cryptol-theorem-or-prop-regexp
-  "^\\(theorem\\|property\\) \\(\\w+\\):?")
+  "^\\(theorem\\|property\\)[[:space:]]+\\([^[:space:]]+\\):?")
 
 ;;; -- Syntax table and highlighting -------------------------------------------
 
