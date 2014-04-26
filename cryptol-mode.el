@@ -259,9 +259,13 @@
 (defun cryptol-insert-type-sig ()
   "Insert a type signature for the symbol under point."
   (interactive)
-  (let ((sym (thing-at-point 'symbol)))
-    (message (get-type-sig-for-symbol sym)))
-  )
+  (let* ((sym (thing-at-point 'symbol))
+         (typ (get-type-sig-for-symbol sym))
+         (terminator (if (is-cryptol-v2) "" ";")))
+    (beginning-of-line)
+    (newline)
+    (forward-line -1)
+    (insert (concat typ terminator))))
 
 ;;; -- imenu support -----------------------------------------------------------
 
