@@ -173,10 +173,6 @@
     (,cryptol-type-regexp     . font-lock-type-face)
     ))
 
-;;; -- Indentation -------------------------------------------------------------
-
-; TODO
-
 ;;; -- Utilities, cryptol info, etc. -------------------------------------------
 
 (defvar *cryptol-backends* nil)
