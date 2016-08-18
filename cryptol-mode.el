@@ -99,7 +99,7 @@
   :type  'string
   :group 'cryptol)
 
-(defcustom cryptol-args-repl '("-ns")
+(defcustom cryptol-args-repl '()
   "The arguments to pass to `cryptol-command' when starting a
    REPL. Note that currently these only apply to Cryptol 1"
   :type  'list
@@ -228,7 +228,7 @@
 
   (message "Starting Cryptol REPL via `%s'." cryptol-command)
   ;; Don't use -ns if we're using Cryptol 2
-  (let ((args (if (is-cryptol-v2) () cryptol-args-repl)))
+  (let ((args cryptol-args-repl))
     (setq cryptol-repl-process-buffer
         (apply 'make-comint
                "cryptol" cryptol-command nil
