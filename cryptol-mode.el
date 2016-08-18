@@ -146,9 +146,6 @@
                  "let" "if" "else" "then" "type" "private" "import"
                  "as" ) 'words))
 
-(defvar cryptol-theorem-or-prop-regexp
-  "^\\(theorem\\|property\\)[[:space:]]+\\([^[:space:]]+\\):?")
-
 ;;; -- Syntax table and highlighting -------------------------------------------
 
 (defvar cryptol-mode-syntax-table
