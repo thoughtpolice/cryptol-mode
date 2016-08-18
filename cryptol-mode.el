@@ -42,9 +42,6 @@
 
 ;; * Indentation mode:
 ;;  - Maybe something like Haskell-mode?
-;; * Better imenu support:
-;;  - Should support function definitions
-;;  - Modules? Parameterized modules?
 ;; * Better highlighting and syntax recognition:
 ;;  - Function names in particular.
 ;; * Compiler support:
@@ -71,7 +68,6 @@
 
 ;;; Known bugs:
 
-;; * `imenu' support only identifies theorems.
 ;; * Literate file support is non-existant. Seriously.
 ;; * Indentation support is also non-existant.
 ;; * Highlighting is rather haphazard, but fairly complete.
@@ -274,40 +270,6 @@
       (forward-line -1)
       (insert typ))))
 
-;;; -- imenu support -----------------------------------------------------------
-
-(easy-menu-define cryptol-mode-menu cryptol-mode-map
-  "Menu for `cryptol-mode'."
-  '("Cryptol"
-    ["Start REPL"              cryptol-repl]
-    ["Theorems and properties" imenu]
-    "---"
-    ["Customize Cryptol group" (customize-group 'cryptol)]
-    ["Cryptol version info" cryptol-version]
-    ["Cryptol backends" cryptol-backends]
-    "---"
-    ["Recolor buffer" font-lock-fontify-buffer t]
-    ))
-
-(defun cryptol-imenu-create-index ()
-  "Creates an imenu index of all the methods/theorems in the buffer."
-  (interactive)
-
-  (goto-char (point-min))
-  (let ((imenu-list '()) assign pos)
-    (while (re-search-forward
-            (concat "\\("
-                    cryptol-theorem-or-prop-regexp
-                    "\\)")
-            (point-max)
-            t)
-      ;; Look for any theorems and add them to the list
-      (when (match-string 3)
-        (setq pos (match-beginning 3))
-        (setq assign (match-string 3))
-        (push (cons assign pos) imenu-list)))
-    imenu-list))
-
 ;;; -- REPL interaction --------------------------------------------------------
 
 (defvar cryptol-repl-process nil
@@ -373,12 +335,8 @@
 
   ;; Indentation, no tabs
   (set (make-local-variable 'tab-width) cryptol-tab-width)
-  (setq indent-tabs-mode nil)
+  (setq indent-tabs-mode nil))
 
-  ;; imenu
-  (make-local-variable 'imenu-create-index-function)
-  (setq imenu-create-index-function 'cryptol-imenu-create-index)
-  (setq imenu-auto-rescan 't))
 (provide 'cryptol-mode)
 
 ;;; ------------------------------------
