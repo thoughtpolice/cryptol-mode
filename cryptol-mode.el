@@ -105,11 +105,6 @@
   :type  'list
   :group 'cryptol)
 
-(defcustom cryptol-args-compile '("-b")
-  "The arguments to pass to `cryptol-command' to compile a file."
-  :type  'list
-  :group 'cryptol)
-
 (defcustom cryptol-mode-default "bit"
   "The default mode to start Cryptol in."
   :type  'string
