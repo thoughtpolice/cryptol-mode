@@ -44,31 +44,19 @@
 ;;  - Maybe something like Haskell-mode?
 ;; * Better highlighting and syntax recognition:
 ;;  - Function names in particular.
-;; * Compiler support:
-;;  - Compile to C code based on the buffer name.
-;;  - Ditto with VHDL, etc.
-;;  - Isabelle compilation.
-;;   - Would it be possible to drop from ':isabelle-i' into
-;;     e.g. proof-general or something?
 ;; * Interactive features:
-;;  - Mode switching.
 ;;  - Run 'check' or 'exhaust' on identifier (see REPL notes below.)
 ;;  - Prove function equivalence between top-level named identifiers.
-;;  - Check satisfiability of constraints/propositions.
-;; * Debugging:
-;;  - It might be possible to have minimal debugger interaction with
-;;    ':trace' and friends.
 ;; * REPL integration:
-;;  - We'd like to be able to set optimization settings.
-;;  - Run 'check' or 'exhaust' on given function/theorem.
+;;  - Run 'check', 'exhaust', or 'prove' on given function/theorem.
 ;;  - Automatically run batch-mode files.
 ;; * Cross platformness:
 ;;  - Works OK on Linux, OS X
-;;  - Windows? :|
+;;  - Untested on Windows
 
 ;;; Known bugs:
 
-;; * Literate file support is non-existant. Seriously.
+;; * Literate file support is non-existant.
 ;; * Indentation support is also non-existant.
 ;; * Highlighting is rather haphazard, but fairly complete.
 
