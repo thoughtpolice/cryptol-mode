@@ -178,14 +178,9 @@
 (defvar *cryptol-version* nil)
 
 (defun process-lines-cryptol (&rest args)
-  "Process output from cryptol, removing stupid libedit noise on Linux.
-  TODO: Elaborate further on this stupidity."
-  (if (not (eq nil args))
-      (let ((cryptol-output (apply 'process-lines (append (list cryptol-command) args))))
-        (if (not (eq nil (string-prefix-p "No entry for terminal type "
-                                          (car cryptol-output))))
-            (nthcdr 2 cryptol-output)
-          cryptol-output))))
+  "Run cryptol with the specified arguments."
+  (when (not (eq nil args))
+    (apply 'process-lines (append (list cryptol-command) args))))
 
 (defun get-cryptol-version ()
   "Get the version information supported by `cryptol-mode'"
