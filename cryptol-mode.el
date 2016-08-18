@@ -187,10 +187,6 @@
             (nthcdr 2 cryptol-output)
           cryptol-output))))
 
-(defun is-cryptol-v2 ()
-  "Check if we're using Cryptol v2"
-  (string-prefix-p "2" (get-cryptol-version)))
-
 (defun get-cryptol-version ()
   "Get the version information supported by `cryptol-mode'"
   (if (not (eq nil *cryptol-version*))
