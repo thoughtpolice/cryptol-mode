@@ -133,7 +133,6 @@
 (defvar cryptol-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "C-c C-l") 'cryptol-repl)
-    (define-key map (kbd "M-t") 'cryptol-insert-type-sig)
     map)
   "Keymap for `cryptol-mode'.")
 
@@ -228,19 +227,6 @@
               (mapconcat 'identity (nthcdr 1 cryptol-version) "")))
       *cryptol-version*)))
 
-(defun get-type-sig-for-symbol (sym)
-  "Get the type signature for a symbol."
-  (interactive)
-  (if (is-cryptol-v2) nil
-    ;; Cryptol v1 is pretty easy considering we can just use the
-    ;; CLI to do the work for us.
-    (let ((out (process-lines-cryptol
-              "-qns"
-              (buffer-file-name)
-              "-c"
-              (concat ":type " sym))))
-    (concat (mapconcat 'identity out " ") ";"))))
-
 ;;;###autoload
 (defun cryptol-backends ()
   "Show the backends supported by the `cryptol-command'."
@@ -258,17 +244,6 @@
   (let ((cryptol-ver-out (get-cryptol-version)))
     (message (concat "cryptol-mode v" cryptol-mode-version
                      ", using Cryptol version " cryptol-ver-out))))
-
-(defun cryptol-insert-type-sig ()
-  "Insert a type signature for the symbol under point."
-  (interactive)
-  (let* ((sym (thing-at-point 'symbol))
-         (typ (get-type-sig-for-symbol sym)))
-    (if (is-cryptol-v2) (message "Not yet supported for Cryptol v2")
-      (beginning-of-line)
-      (newline)
-      (forward-line -1)
-      (insert typ))))
 
 ;;; -- REPL interaction --------------------------------------------------------
 
