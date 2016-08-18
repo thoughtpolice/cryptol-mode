@@ -1,6 +1,6 @@
 ;;; cryptol-mode.el --- Cryptol major mode for Emacs
 
-;; Copyright (c) 2013-2014 Austin Seipp.
+;; Copyright (c) 2013-2016 Austin Seipp.
 
 ;; Author:    Austin Seipp <aseipp [@at] pobox [dot] com>
 ;; URL:       http://github.com/thoughtpolice/cryptol-mode
@@ -12,7 +12,7 @@
 
 ;;; License:
 
-;; Copyright (C) 2013 Austin Seipp
+;; Copyright (C) 2013-2016 Austin Seipp
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation, either version 3 of the License, or
@@ -34,7 +34,7 @@
 ;; running Cryptol code.
 ;;
 ;; For more information about Cryptol, check out the homepage and
-;; documentation: http://corp.galois.com/cryptol/
+;; documentation: http://www.cryptol.net/
 ;;
 ;; For usage info, release notes and bugs, check the homepage.
 
