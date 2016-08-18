@@ -175,7 +175,6 @@
 
 ;;; -- Utilities, cryptol info, etc. -------------------------------------------
 
-(defvar *cryptol-backends* nil)
 (defvar *cryptol-version* nil)
 
 (defun process-lines-cryptol (&rest args)
@@ -187,16 +186,6 @@
                                           (car cryptol-output))))
             (nthcdr 2 cryptol-output)
           cryptol-output))))
-
-(defun get-cryptol-backends ()
-  "Get the backends supported by the Cryptol compiler."
-  (if (not (eq nil *cryptol-backends*))
-      *cryptol-backends*
-    (let ((cryptol-backends
-           (nthcdr 2 (split-string
-                    (nth 3 (process-lines-cryptol "-v"))))))
-      (setq *cryptol-backends* cryptol-backends)
-      *cryptol-backends*)))
 
 (defun is-cryptol-v2 ()
   "Check if we're using Cryptol v2"
@@ -217,16 +206,6 @@
         (setq *cryptol-version*
               (mapconcat 'identity (nthcdr 1 cryptol-version) "")))
       *cryptol-version*)))
-
-;;;###autoload
-(defun cryptol-backends ()
-  "Show the backends supported by the `cryptol-command'."
-  (interactive)
-  (if (is-cryptol-v2)
-      (message "Cryptol backends: N/A")
-    (let ((cryptol-backend-out
-           (mapconcat 'identity (get-cryptol-backends) " ")))
-      (message (concat "Cryptol backends: " (concat cryptol-backend-out))))))
 
 ;;;###autoload
 (defun cryptol-version ()
