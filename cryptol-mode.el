@@ -105,11 +105,6 @@
   :type  'list
   :group 'cryptol)
 
-(defcustom cryptol-mode-default "bit"
-  "The default mode to start Cryptol in."
-  :type  'string
-  :group 'cryptol)
-
 (defcustom cryptol-compiled-buffer-name "*cryptol-compiled*"
   "The name of the scratch buffer for compiled Cryptol."
   :type  'string
