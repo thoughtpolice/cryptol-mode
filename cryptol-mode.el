@@ -192,19 +192,14 @@
   (string-prefix-p "2" (get-cryptol-version)))
 
 (defun get-cryptol-version ()
-  "Get the version information supported by `cryptol-mode', including license."
+  "Get the version information supported by `cryptol-mode'"
   (if (not (eq nil *cryptol-version*))
       *cryptol-version*
     (let ((cryptol-version
            (split-string
              (car (process-lines-cryptol "-v")))))
-      (if (not (eq nil (nthcdr 2 cryptol-version)))
-          ;; "Cryptol version 1.x.x"
-          (setq *cryptol-version*
-                (mapconcat 'identity (nthcdr 2 cryptol-version) ""))
-        ;; "Cryptol v2.x.x"
-        (setq *cryptol-version*
-              (mapconcat 'identity (nthcdr 1 cryptol-version) "")))
+      (setq *cryptol-version*
+              (mapconcat 'identity (nthcdr 1 cryptol-version) ""))
       *cryptol-version*)))
 
 ;;;###autoload
