@@ -357,7 +357,11 @@
   (pop-to-buffer "*cryptol*")
   (message ""))
 
+;;; ----------------------------------------------------------------------------
 ;;; -- Mode entry --------------------------------------------------------------
+
+;;; ------------------------------------
+;;; -- Cryptol mode
 
 ;; Major mode for cryptol code
 ;;;###autoload
@@ -377,6 +381,9 @@
   (setq imenu-auto-rescan 't))
 (provide 'cryptol-mode)
 
+;;; ------------------------------------
+;;; -- Literate cryptol mode
+
 ;; Major mode for literate cryptol code
 ;;;###autoload
 (define-derived-mode literate-cryptol-mode fundamental-mode "Literate Cryptol"
@@ -389,6 +396,9 @@
   (set (make-local-variable 'tab-width) cryptol-tab-width)
   (setq indent-tabs-mode nil))
 (provide 'literate-cryptol-mode)
+
+;;; ------------------------------------
+;;; -- Batch file mode
 
 ;; Major mode used for .scr files (batch files)
 ;;;###autoload
