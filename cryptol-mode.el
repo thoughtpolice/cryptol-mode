@@ -93,9 +93,10 @@
   :type  'list
   :group 'cryptol)
 
-(defcustom cryptol-compiled-buffer-name "*cryptol-compiled*"
-  "The name of the scratch buffer for compiled Cryptol."
-  :type  'string
+(defcustom cryptol-lib-path '()
+  "A list of paths, to be passed to cryptol in the CRYPTOLPATH environment
+   variable. Use this to specify external libraries to load."
+  :type  'list
   :group 'cryptol)
 
 (defcustom cryptol-mode-hook nil
@@ -113,6 +114,10 @@
     (define-key map (kbd "C-c C-l") 'cryptol-repl)
     map)
   "Keymap for `cryptol-mode'.")
+
+(defvar *cryptol-pathsep*
+  ":" ;; TODO FIXME: windows uses ';' it seems
+  )
 
 ;;; -- Language Syntax ---------------------------------------------------------
 
@@ -198,7 +203,14 @@
   (interactive)
 
   (message "Starting Cryptol REPL via `%s'." cryptol-command)
-  ;; Don't use -ns if we're using Cryptol 2
+  ;; Set up the environment via CRYPTOLPATH
+  (let ((emacs-paths (mapconcat 'identity cryptol-lib-path *cryptol-pathsep*))
+	(priorenv    (getenv "CRYPTOLPATH"))
+	(extra       (if (eq '() cryptol-lib-path) "" *cryptol-pathsep*)))
+    (let ((result (concat emacs-paths extra priorenv)))
+      (if (not (eq "" result))
+	  (setenv "CRYPTOLPATH" result))))
+
   (let ((args cryptol-args-repl))
     (setq cryptol-repl-process-buffer
         (apply 'make-comint
@@ -218,9 +230,11 @@
   (setq shell-cd-regexp ":cd")
   (setq shell-dirtrackp t)
   (add-hook 'comint-input-filter-functions 'shell-directory-tracker nil 'local)
-  (ansi-color-for-comint-mode-on)
 
   (setq comint-prompt-regexp cryptol-repl-comint-prompt-regexp)
+
+  (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+  (add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
 
   (setq comint-input-autoexpand nil)
   (setq comint-process-echoes nil)
@@ -247,7 +261,6 @@
   ;; Indentation, no tabs
   (set (make-local-variable 'tab-width) cryptol-tab-width)
   (setq indent-tabs-mode nil))
-
 (provide 'cryptol-mode)
 
 ;;; ------------------------------------
