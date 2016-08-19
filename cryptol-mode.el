@@ -87,7 +87,7 @@
   :type  'string
   :group 'cryptol)
 
-(defcustom cryptol-args-repl '()
+(defcustom cryptol-args-repl '("--color=always")
   "The arguments to pass to `cryptol-command' when starting a
    REPL. Note that currently these only apply to Cryptol 1"
   :type  'list
