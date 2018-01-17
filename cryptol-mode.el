@@ -260,7 +260,11 @@
 
   ;; Indentation, no tabs
   (set (make-local-variable 'tab-width) cryptol-tab-width)
-  (setq indent-tabs-mode nil))
+  (setq indent-tabs-mode nil)
+
+  ;; Comment syntax for M-;
+  (set (make-local-variable 'comment-start) "//")
+  (set (make-local-variable 'comment-end) ""))
 (provide 'cryptol-mode)
 
 ;;; ------------------------------------
