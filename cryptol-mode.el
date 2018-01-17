@@ -1,4 +1,4 @@
-;;; cryptol-mode.el --- Cryptol major mode for Emacs
+;;; cryptol-mode.el --- Cryptol major mode for Emacs -*- lexical-binding: t; -*-
 
 ;; Copyright (c) 2013-2016 Austin Seipp.
 
@@ -213,11 +213,11 @@
 
   (let ((args cryptol-args-repl))
     (setq cryptol-repl-process-buffer
-        (apply 'make-comint
-               "cryptol" cryptol-command nil
-               (if (eq nil (buffer-file-name))
-                   args
-                 (append args (list buffer-file-name))))))
+          (apply 'make-comint
+                 "cryptol" cryptol-command nil
+                 (if (eq nil (buffer-file-name))
+                     args
+                   (append args (list buffer-file-name))))))
 
   (setq cryptol-repl-process
         (get-buffer-process cryptol-repl-process-buffer))
@@ -235,6 +235,8 @@
 
   (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
   (add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
+  (add-hook 'comint-output-filter-functions 'cryptol-repl--highlight-output-locations nil t)
+  (add-hook 'comint-output-filter-functions 'cryptol-repl--highlight-error-warning nil t)
 
   (setq comint-input-autoexpand nil)
   (setq comint-process-echoes nil)
@@ -243,6 +245,83 @@
   (run-hooks 'cryptol-repl-hook)
   (pop-to-buffer "*cryptol*")
   (message ""))
+
+(defvar cryptol-repl--location-regexp
+  (rx (seq "at "
+           (group-n 6 (seq (group-n 1 (1+ (not (any ?\:)))) ":" (group-n 2 (1+ digit)) ":" (group-n 3 (1+ digit))
+                           (zero-or-one (seq "--" (group-n 4 (1+ digit)) ":" (group-n 5 (1+ digit))))))))
+  "Regexp matching Cryptol REPL source locations.")
+
+
+(defun cryptol-repl--highlight-output-locations (_orig)
+  "Add highlighted overlays to Cryptol source locations."
+  (save-excursion
+    (save-restriction
+      (widen)
+      (narrow-to-region comint-last-output-start
+                        (process-mark cryptol-repl-process))
+      (goto-char (point-min))
+      (while (re-search-forward cryptol-repl--location-regexp nil t)
+        (let ((file (match-string 1))
+              (line (string-to-number (match-string 2)))
+              (column (string-to-number (match-string 3)))
+              (end-line (let ((str (match-string 4)))
+                          (and str (string-to-number str))))
+              (end-column (let ((str (match-string 5)))
+                            (and str (string-to-number str))))
+              (start (match-beginning 6))
+              (end (match-end 6)))
+          (let ((overlay (make-overlay start end))
+                (keymap (let ((map (make-sparse-keymap))
+                              (goto-pos #'(lambda ()
+                                            (interactive)
+                                            (let ((file-buffer (save-excursion (find-file file))))
+                                              (with-current-buffer file-buffer
+                                                (message "%s:%s--%s:%s" line column end-line end-column)
+                                                (save-restriction
+                                                  (widen)
+                                                  (goto-char (point-min))
+                                                  (forward-line (1- line))
+                                                  (forward-char (1- column))
+                                                  (let ((start-pos (point)))
+                                                    (when (and end-line end-column)
+                                                      (goto-char (point-min))
+                                                      (forward-line (1- end-line))
+                                                      (forward-char (1- end-column))
+                                                      (let ((end-pos (point)))
+                                                        (push-mark end-pos t t)
+                                                        (goto-char start-pos))))))
+                                              (pop-to-buffer file-buffer)))))
+                          (define-key map (kbd "RET") goto-pos)
+                          (define-key map (kbd "<mouse-2>") goto-pos)
+                          (define-key map (kbd "<mouse-1>") goto-pos)
+                          map)))
+            (overlay-put overlay 'face 'link)
+            (overlay-put overlay 'mouse-face 'highlight)
+            (overlay-put overlay 'help-echo "mouse-2: jump to this location")
+            (overlay-put overlay 'keymap keymap)))))))
+
+(defvar cryptol-repl--error-or-warning-regexp
+  (rx (or (group-n 1 "[error]") (group-n 2 "[warning]")))
+  "Regexp matching errors (group 1) or warnings (group 2).")
+
+(defun cryptol-repl--highlight-error-warning (_orig)
+  "Add highlighted overlays to Cryptol error or warning markers."
+  (save-excursion
+    (save-restriction
+      (widen)
+      (narrow-to-region comint-last-output-start
+                        (process-mark cryptol-repl-process))
+      (goto-char (point-min))
+      (while (re-search-forward cryptol-repl--error-or-warning-regexp nil t)
+        (let ((errorp (match-string 1))
+              (warningp (match-string 2))
+              (start (match-beginning 0))
+              (end (match-end 0)))
+          (let ((overlay (make-overlay start end)))
+            (overlay-put overlay 'face (cond (errorp 'compilation-error)
+                                             (warningp 'compilation-warning)
+                                             (t nil)))))))))
 
 ;;; ----------------------------------------------------------------------------
 ;;; -- Mode entry --------------------------------------------------------------
