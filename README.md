@@ -14,7 +14,7 @@ writing cryptographic code. From the homepage:
 > of an implementation to a reference specification, at each stage of
 > the toolchain.
 
-[Cryptol]: http://corp.galois.com/cryptol/
+[Cryptol]: https://www.cryptol.net/
 
 # Installation
 
