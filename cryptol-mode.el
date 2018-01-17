@@ -252,6 +252,23 @@
                            (zero-or-one (seq "--" (group-n 4 (1+ digit)) ":" (group-n 5 (1+ digit))))))))
   "Regexp matching Cryptol REPL source locations.")
 
+(defun cryptol-repl--select-range-relative (start-line start-column end-line end-column)
+  "Select the range from START-LINE and START-COLUMN to END-LINE and END-COLUMN.
+
+This function assumes that the buffer has been narrowed or
+widened such that `point-min' returns the position that the line
+and columns are relative to."
+  (goto-char (point-min))
+  (forward-line (1- start-line))
+  (forward-char (1- start-column))
+  (let ((start-pos (point)))
+    (when (and end-line end-column)
+      (goto-char (point-min))
+      (forward-line (1- end-line))
+      (forward-char (1- end-column))
+      (let ((end-pos (point)))
+        (push-mark end-pos t t)
+        (goto-char start-pos)))))
 
 (defun cryptol-repl--highlight-output-locations (_orig)
   "Add highlighted overlays to Cryptol source locations."
@@ -270,28 +287,26 @@
               (end-column (let ((str (match-string 5)))
                             (and str (string-to-number str))))
               (start (match-beginning 6))
-              (end (match-end 6)))
+              (end (match-end 6))
+              (input-start (marker-position comint-last-input-start))
+              (input-end (marker-position comint-last-input-end)))
           (let ((overlay (make-overlay start end))
                 (keymap (let ((map (make-sparse-keymap))
                               (goto-pos #'(lambda ()
                                             (interactive)
-                                            (let ((file-buffer (save-excursion (find-file file))))
-                                              (with-current-buffer file-buffer
-                                                (message "%s:%s--%s:%s" line column end-line end-column)
-                                                (save-restriction
-                                                  (widen)
-                                                  (goto-char (point-min))
-                                                  (forward-line (1- line))
-                                                  (forward-char (1- column))
-                                                  (let ((start-pos (point)))
-                                                    (when (and end-line end-column)
-                                                      (goto-char (point-min))
-                                                      (forward-line (1- end-line))
-                                                      (forward-char (1- end-column))
-                                                      (let ((end-pos (point)))
-                                                        (push-mark end-pos t t)
-                                                        (goto-char start-pos))))))
-                                              (pop-to-buffer file-buffer)))))
+                                            (if (string= file "<interactive>")
+                                                (with-current-buffer cryptol-repl-process-buffer
+                                                  (save-restriction
+                                                    (narrow-to-region input-start input-end)
+                                                    (cryptol-repl--select-range-relative line column
+                                                                                         end-line end-column)))
+                                              (let ((file-buffer (save-excursion (find-file file))))
+                                                (with-current-buffer file-buffer
+                                                  (save-restriction
+                                                    (widen)
+                                                    (cryptol-repl--select-range-relative line column
+                                                                                         end-line end-column)))
+                                                (pop-to-buffer file-buffer))))))
                           (define-key map (kbd "RET") goto-pos)
                           (define-key map (kbd "<mouse-2>") goto-pos)
                           (define-key map (kbd "<mouse-1>") goto-pos)
