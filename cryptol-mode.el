@@ -135,9 +135,10 @@
 (defvar cryptol-type-regexp "\\<[[:upper:]]\\w*")
 
 (defvar cryptol-keywords-regexp
-  (regexp-opt '( "module" "property" "where" "include"
-                 "let" "if" "else" "then" "type" "private" "import"
-                 "as" ) 'words))
+  (regexp-opt '("else" "include" "property" "let" "newtype" "primitive"
+                "extern" "module" "then" "import" "infixl" "parameter"
+                "if" "newtype" "type" "as" "infixr" "constraint"
+                "private" "pragma" "where" "hiding" "infix") 'words))
 
 ;;; -- Syntax table and highlighting -------------------------------------------
 
